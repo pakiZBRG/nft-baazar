@@ -1,0 +1,43 @@
+{
+  "name": "template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "client": "cd client && npm start",
+    "blockchain": "hh node",
+    "dev": "concurrently \"npm run client\" \"npm run blockchain\"",
+    "build": "cd client && npm run build",
+    "deploy:goerli": "hh deploy --network goerli",
+    "deploy:mumbai": "hh deploy --network mumbai",
+    "postinstall": "cd client && npm i && cd ../",
+    "main": "hh run scripts/main.js --network localhost"
+  },
+  "keywords": [],
+  "author": "pakiZBRG",
+  "license": "ISC",
+  "dependencies": {
+    "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.13",
+    "@nomiclabs/hardhat-etherscan": "^3.1.0",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "chai": "^4.3.6",
+    "dotenv": "^16.0.1",
+    "ethers": "^5.5.4",
+    "hardhat": "^2.10.0",
+    "hardhat-deploy": "^0.11.10",
+    "solidity-coverage": "^0.7.21"
+  },
+  "devDependencies": {
+    "@chainlink/contracts": "^0.4.2",
+    "@openzeppelin/contracts": "^4.7.3",
+    "concurrently": "^7.4.0",
+    "eslint": "^8.24.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-react": "^7.31.8",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "ethereum-waffle": "^3.4.4",
+    "solhint": "^3.3.7"
+  }
+}

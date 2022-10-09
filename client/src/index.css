@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Inconsolata:wght@300&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+      font-family: Montserrat;
+      letter-spacing: 0.03em;
+  }
+}
+
+.address-font {
+  font-family: Inconsolata;
+}
+
+.gradient-background {
+  background-color:hsla(310,0%,0%,1);
+  background-image:
+    radial-gradient(at 9% 68%, hsla(147,0%,0%,0.66) 0px, transparent 70%),
+    radial-gradient(at 95% 3%, hsla(282,89%,61%,0.31) 0px, transparent 70%),
+    radial-gradient(at 79% 33%, hsla(267,0%,0%,0.93) 0px, transparent 70%),
+    radial-gradient(at 34% 3%, hsla(175,81%,60%,0.36) 0px, transparent 70%),
+    radial-gradient(at 78% 74%, hsla(24,89%,33%,0.6) 0px, transparent 70%);
+}
+
+.black-glassmorphism {
+  background: rgba(15, 15, 15, 0.45);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.white-glassmorphism {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  background: #222;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgba(255,255,255,0.3); 
+}
