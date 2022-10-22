@@ -1,12 +1,12 @@
 {
-  "name": "template",
+  "name": "nft-baazar",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "client": "cd client && npm start",
+    "client": "cd client && npm run dev",
     "blockchain": "hh node",
-    "dev": "concurrently \"npm run client\" \"npm run blockchain\"",
+    "dev": "concurrently \"npm run client\" \"npm run blockchain\" \"hh deploy\"",
     "build": "cd client && npm run build",
     "deploy:goerli": "hh deploy --network goerli",
     "deploy:mumbai": "hh deploy --network mumbai",

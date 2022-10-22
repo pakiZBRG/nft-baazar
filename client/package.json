@@ -1,29 +1,29 @@
 {
-  "name": "template-client",
-  "private": true,
+  "name": "nft-baazar-client",
   "version": "1.0.0",
-  "type": "module",
+  "author": "pakiZBRG",
   "scripts": {
-    "start": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "next dev -p 4000",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@metamask/jazzicon": "^2.0.0",
+    "axios": "^1.1.2",
     "ethers": "^5.5.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "ipfs-http-client": "^58.0.1",
+    "next": "12.3.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-dropzone": "^14.2.2",
     "react-icons": "^4.4.0",
-    "react-scripts": "^5.0.1",
-    "react-toastify": "^9.0.5",
-    "vite": "^3.0.0"
+    "react-jazzicon": "^1.0.4",
+    "react-toastify": "^9.0.5"
   },
   "devDependencies": {
-    "@types/react": "^18.0.15",
-    "@types/react-dom": "^18.0.6",
-    "@vitejs/plugin-react": "^2.0.0",
     "autoprefixer": "^10.4.7",
-    "events": "^3.3.0",
+    "eslint": "8.25.0",
+    "eslint-config-next": "12.3.1",
     "postcss": "^8.4.14",
     "tailwindcss": "^3.1.6"
   }

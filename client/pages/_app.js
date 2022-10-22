@@ -1,31 +1,63 @@
 import React, { useEffect, useState } from 'react';
+import Head from 'next/head';
 import { ethers } from 'ethers';
 import { ToastContainer, toast } from 'react-toastify';
-import { Nav } from './components';
-import { abi, contractAddress } from './contract';
+import { create } from 'ipfs-http-client';
 import 'react-toastify/dist/ReactToastify.css';
+
+import { Nav } from '../components';
+import { abi, contractAddress } from '../contract';
+import '../styles/main.css';
+import { networks } from '../utils';
 
 let provider;
 let signer;
-if (window.ethereum) {
+if (typeof window !== 'undefined') {
   provider = new ethers.providers.Web3Provider(window.ethereum, 'any');
   signer = provider.getSigner();
 }
 
-const App = () => {
+const projectId = process.env.NEXT_PUBLIC_IPFS_ID;
+const projectSecret = process.env.NEXT_PUBLIC_IPFS_SECRET;
+const gateway = process.env.NEXT_PUBLIC_GATEWAY;
+
+const auth = `Basic ${Buffer.from(`${projectId}:${projectSecret}`).toString('base64')}`;
+
+const ipfs = create({
+  host: 'ipfs.infura.io',
+  port: 5001,
+  protocol: 'https',
+  headers: {
+    authorization: auth,
+  },
+});
+
+const MyApp = ({ Component, pageProps }) => {
   const [account, setAccount] = useState({ address: '', balance: '' });
   const [installMetamask, setInstallMetamask] = useState(false);
   const [switchNetwork, setSwitchNetwork] = useState(false);
   const [chainId, setChainId] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [showSellModal, setShowSellModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [deployedNetworks, setDeployedNetworks] = useState([]);
+  const [currency, setCurrency] = useState('');
+  const [openImage, setOpenImage] = useState(false);
 
   const getContract = async (signerOrProvider) => {
-    const network = await provider.getNetwork();
-    const address = contractAddress[network.chainId.toString()];
-    const contract = new ethers.Contract(address, abi, signerOrProvider);
-    return contract;
+    try {
+      const network = await provider.getNetwork();
+      const address = contractAddress[network.chainId.toString()];
+      const contract = new ethers.Contract(address, abi, signerOrProvider);
+      return contract;
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const getInterface = () => {
+    const iface = new ethers.utils.Interface(abi);
+    return iface;
   };
 
   const connectWallet = async () => {
@@ -43,16 +75,26 @@ const App = () => {
   };
 
   const isConnected = async () => {
-    const address = await signer.getAddress();
-    return address;
+    try {
+      const address = await signer.getAddress();
+      return address;
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const getCurrentNetwork = async () => {
     const available = Object.keys(contractAddress).map((key) => key);
     setDeployedNetworks(available);
-    const network = await provider.getNetwork();
-    setChainId(`0x${network.chainId.toString(16)}`);
-    setSwitchNetwork(Boolean(!contractAddress[+network.chainId]));
+    try {
+      const network = await provider.getNetwork();
+      setChainId(`0x${network.chainId.toString(16)}`);
+      setSwitchNetwork(Boolean(!contractAddress[+network.chainId]));
+      const selectedNetwork = networks.find((net) => net.chainId === `0x${network.chainId.toString(16)}`);
+      setCurrency(selectedNetwork?.nativeCurrency.symbol);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   useEffect(() => {
@@ -83,10 +125,16 @@ const App = () => {
     }
   }, []);
 
+  const props = { ...pageProps, currency, ipfs, gateway, signer, provider, getContract, account, setShowSellModal, showSellModal, openImage, setOpenImage, getInterface };
+
   return (
     <>
+      <Head>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <title>NFT Baazar</title>
+      </Head>
       <ToastContainer position="bottom-right" theme="dark" />
-      {showModal && <div className="absolute w-screen h-screen bg-gray-900 opacity-80 z-10" />}
+      {(showModal || showSellModal || openImage) && <div className="absolute w-screen h-screen backdrop-blur-md backdrop-brightness-50 z-10" />}
       <div className="min-h-screen gradient-background flex flex-col">
         <Nav
           connectWallet={connectWallet}
@@ -101,16 +149,12 @@ const App = () => {
           isLoggedIn={isLoggedIn}
           deployedNetworks={deployedNetworks}
         />
-        <div className="flex items-center justify-center">
-          {!isLoggedIn
-            ? <p className="text-center mt-16 text-slate-200">Connect to Metamask</p>
-            : (
-              <p className="text-center mt-16 text-slate-200">You are connected</p>
-            )}
+        <div className="my-8 w-11/12 mx-auto">
+          <Component {...props} />
         </div>
       </div>
     </>
   );
 };
 
-export default App;
+export default MyApp;

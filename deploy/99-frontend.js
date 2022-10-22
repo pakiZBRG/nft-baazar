@@ -2,8 +2,8 @@ const path = require('path');
 const fs = require('fs');
 const { ethers, network } = require('hardhat');
 
-const ABI_PATH = path.join(__dirname, '../client/src/contract/ABI.json');
-const CONTRACT_ADDRESS_PATH = path.join(__dirname, '../client/src/contract/contractAddress.json');
+const ABI_PATH = path.join(__dirname, '../client/contract/ABI.json');
+const CONTRACT_ADDRESS_PATH = path.join(__dirname, '../client/contract/contractAddress.json');
 
 const updateContractAddress = async () => {
   const chainId = network.config.chainId.toString();

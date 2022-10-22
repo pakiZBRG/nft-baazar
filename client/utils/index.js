@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 
 // shorten address -> first 5 chars and last 4
-const shortenAddress = (address) => `${address.slice(0, 6)}...${address.slice(-4)}`;
+const shortenAddress = (address) => `${address?.slice(0, 6)}...${address?.slice(-4)}`;
 
 // format hex to int
 const formatBigNumber = (price, decimal) => {
@@ -16,11 +16,17 @@ const networks = [
     chainId: `0x${Number(31337).toString(16)}`,
     chainName: 'Localhost',
     nativeCurrency: {
-      name: 'CPAY',
-      symbol: 'CPAY',
+      name: 'GO',
+      symbol: 'GO',
       decimals: 18,
     },
-    rpcUrls: ['http://localhost:8545'],
+    rpcUrls: [
+      'http://127.0.0.1:8545',
+    ],
+    iconUrls: [
+      'https://cdn.freebiesupply.com/logos/large/2x/ethereum-1-logo-png-transparent.png',
+      '/static/eth-logo.png',
+    ],
   },
   {
     chainId: `0x${Number(5).toString(16)}`,
@@ -38,7 +44,7 @@ const networks = [
     blockExplorerUrls: ['https://goerli.etherscan.io'],
     iconUrls: [
       'https://cdn.freebiesupply.com/logos/large/2x/ethereum-1-logo-png-transparent.png',
-      '/eth-logo.png',
+      '/static/eth-logo.png',
     ],
   },
   {
@@ -57,7 +63,7 @@ const networks = [
     blockExplorerUrls: ['https://mumbai.polygonscan.com'],
     iconUrls: [
       'https://img.api.cryptorank.io/coins/polygon1624610763534.png',
-      '/polygon-logo.png',
+      '/static/polygon-logo.png',
     ],
   },
 ];

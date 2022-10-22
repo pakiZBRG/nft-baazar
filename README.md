@@ -11,8 +11,10 @@ Basic Hardhat template for building extensive smart contracts with frontend. You
 
 ## Setup environment variables
 - `PRIVATE_KEY` - private key of one of your Metamask accounts
-- `GOERLI_RPC_URL` - Goerli RPC URL from [Infura](https://infura.io/dashboard)
-- `MUMBAI_RPC_URL` - Mumbai RPC URL from [Infura](https://infura.io/dashboard)
+- `GOERLI_RPC_URL` - Goerli RPC URL from [Alchemy](https://dashboard.alchemy.com/)
+- `GOERLI_WSS` - Goerli WebSocket URL from [Alchemy](https://dashboard.alchemy.com/)
+- `MUMBAI_RPC_URL` - Mumbai RPC URL from [Alchemy](https://dashboard.alchemy.com/)
+- `MUMBAI_WSS` - Mumbai WebSocket URL from [Alchemy](https://dashboard.alchemy.com/)
 - `ETHERSCAN_API_KEY` - API key from [Etherscan](https://etherscan.io/) for contract verification
 - `POLYGONSCAN_API_KEY` - API key from [Polygonscan](https://polygonscan.com/) for contract verification
 
@@ -85,7 +87,7 @@ hh deploy --network mumbai
 ```
 
 ## Frontend
-Frontend is built using Vite, React and TailwindCSS
+Frontend is built using Next.js and TailwindCSS
 
 ## Eslint Config
 Reconfigure eslint
