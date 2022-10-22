@@ -2,10 +2,11 @@ import { useEffect, useState, useCallback } from 'react';
 import { ethers } from 'ethers';
 import axios from 'axios';
 
-import { Card, Loader, CreatorCard } from '../components';
+import { Card, Loader, CreatorCard, Filter } from '../components';
 
 const Home = ({ provider, signer, getContract, currency }) => {
   const [nfts, setNfts] = useState([]);
+  const [copyNfts, setCopyNfts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [creators, setCreators] = useState([]);
 
@@ -25,11 +26,13 @@ const Home = ({ provider, signer, getContract, currency }) => {
           seller: item.seller,
           owner: item.owner,
           creator: item.creator,
+          createdAt: item.createdAt.toNumber(),
           tokenURI,
         };
       }));
 
       setNfts(items);
+      setCopyNfts(items);
       setLoading(false);
     } catch (error) {
       console.log(error.message);
@@ -38,7 +41,7 @@ const Home = ({ provider, signer, getContract, currency }) => {
   }, [getContract, provider]);
 
   const topCreators = useCallback(() => {
-    const Creators = nfts.reduce((creator, nft) => {
+    const Creators = copyNfts.reduce((creator, nft) => {
       creator[nft.seller] = creator[nft.seller] || [];
       creator[nft.seller].push(nft);
 
@@ -51,7 +54,7 @@ const Home = ({ provider, signer, getContract, currency }) => {
 
       return ({ seller, sum });
     });
-  }, [nfts]);
+  }, [copyNfts]);
 
   useEffect(() => {
     fetchNFTs();
@@ -72,11 +75,14 @@ const Home = ({ provider, signer, getContract, currency }) => {
             : <h1 className="mx-auto text-slate-300 text-lg font-bold italic">No Creators</h1>
           : <div className="mx-auto"><Loader size={8} /></div>}
       </div>
-      <h1 className="text-2xl text-slate-100 font-bold my-8">NFTs on sale!</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl text-slate-100 font-bold my-9">NFTs on sale!</h1>
+        <Filter nfts={nfts} setNfts={setNfts} copyNfts={copyNfts} />
+      </div>
       <div className="flex flex-wrap">
         {!loading
-          ? nfts?.length
-            ? nfts.map((nft) => <Card key={nft.tokenId} getContract={getContract} provider={provider} currency={currency} nft={nft} signer={signer} />)
+          ? copyNfts?.length
+            ? copyNfts.map((nft) => <Card key={nft.tokenId} getContract={getContract} provider={provider} currency={currency} nft={nft} signer={signer} />)
             : <h1 className="mx-auto text-slate-300 text-lg font-bold italic">No NFTs For Sale</h1>
           : <div className="mx-auto"><Loader size={8} /></div>}
       </div>

@@ -1,5 +1,5 @@
 const Loader = ({ message, size }) => (
-  <div className="flex justify-center my-0 py-0">
+  <div className="flex justify-center items-center my-0 py-0">
     {message}
     <svg className={`animate-spin ml-3 h-${size} w-${size} text-white`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />

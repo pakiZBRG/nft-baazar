@@ -135,8 +135,6 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
     }
   };
 
-  console.log(nft);
-
   const isCreator = nft.creator?.toLowerCase() === account.address.toLowerCase() || nft.seller === '0x0000000000000000000000000000000000000000' || nft.seller?.toLowerCase() === account.address.toLowerCase();
 
   return (
@@ -204,8 +202,8 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
                 ? <div className="p-1 h-40 overflow-y-auto">{nft.description}</div>
                 : (
                   <div className="p-1 h-40 overflow-y-auto">
-                    {events?.map(({ buyer, price: expe }) => (
-                      <>
+                    {events?.map(({ buyer, price: expe }, i) => (
+                      <div key={i}>
                         <div className="flex justify-between items-center p-1 m-1">
                           <div className="flex items-center">
                             <Jazzicon diameter={15} seed={parseInt(buyer.slice(2, 10), 16)} />
@@ -220,7 +218,7 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
                           </div>
                         </div>
                         <div className="w-full h-[1px] bg-zinc-100 opacity-10" />
-                      </>
+                      </div>
                     ))}
                   </div>
                 )}
