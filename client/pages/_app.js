@@ -134,7 +134,7 @@ const MyApp = ({ Component, pageProps }) => {
         <title>NFT Baazar</title>
       </Head>
       <ToastContainer position="bottom-right" theme="dark" />
-      {(showModal || showSellModal || openImage) && <div className="absolute w-screen h-screen backdrop-blur-md backdrop-brightness-50 z-10" />}
+      {(showModal || showSellModal || openImage) && <div className="absolute w-screen h-screen backdrop-blur-md backdrop-brightness-50 z-30" />}
       <div className="min-h-screen gradient-background flex flex-col">
         <Nav
           connectWallet={connectWallet}

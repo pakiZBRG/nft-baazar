@@ -118,7 +118,7 @@ const Nav = ({ account, installMetamask, connectWallet, switchNetwork, chainId, 
                             onMouseLeave={() => setShowDialog(false)}
                           />
                           <div
-                            className="absolute top-[45px] w-[220px] px-4 py-3 rounded-xl black-glassmorphism"
+                            className="absolute top-[45px] w-[220px] px-4 py-3 rounded-xl black-glassmorphism z-20"
                             onMouseEnter={() => setShowDialog(true)}
                             onMouseLeave={() => setShowDialog(false)}
                           >
@@ -221,7 +221,7 @@ const Nav = ({ account, installMetamask, connectWallet, switchNetwork, chainId, 
 
       {showModal
         && (
-          <div ref={modalRef} className="fixed inset-1/2 -translate-y-1/2 -translate-x-1/2 w-96 h-44 black-glassmorphism rounded-xl border border-gray-700 z-20 text-white p-4">
+          <div ref={modalRef} className="fixed inset-1/2 -translate-y-1/2 -translate-x-1/2 w-96 h-44 black-glassmorphism rounded-xl border border-gray-700 z-30 text-white p-4">
             <h3>Account</h3>
             <p className="absolute right-3 top-2 text-3xl cursor-pointer" onClick={() => setShowModal(false)}>&times;</p>
             <div className="flex justify-between items-center mt-3 mb-2">

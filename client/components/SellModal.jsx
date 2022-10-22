@@ -2,7 +2,7 @@ import React from 'react';
 import Loader from './Loader';
 
 const SellModal = ({ modalRef, nft, price, currency, setPrice, putNftOnSale, reject, setShowSellModal, removeNftFromSale }) => (
-  <div ref={modalRef} className="fixed flex flex-col items-center inset-1/2 -translate-y-1/2 -translate-x-1/2 w-96 h-max black-glassmorphism rounded-xl border border-gray-700 z-20 text-white p-4 px-6">
+  <div ref={modalRef} className="fixed flex flex-col items-center inset-1/2 -translate-y-1/2 -translate-x-1/2 w-96 h-max black-glassmorphism rounded-xl border border-gray-700 z-30 text-white p-4 px-6">
     <h3 className="font-bold text-lg text-center">{nft.isSelling ? 'Are you sure you want to remove NFT from the open market?' : 'Put NFT on Sale'}</h3>
     {!nft.isSelling
       && (

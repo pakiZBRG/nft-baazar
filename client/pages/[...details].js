@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useEffect, useState, useCallback, useRef } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
@@ -141,10 +142,10 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
     <>
       {openImage
         && (
-          <div>
-            <span className="z-20 text-white text-7xl cursor-pointer top-[10px] right-[10px] absolute" onClick={() => setOpenImage(false)}>&times;</span>
-            <img src={nft.image} className="z-20 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4/5 h-4/5 object-contain" />
-          </div>
+          <>
+            <span className="z-30 text-white text-7xl cursor-pointer top-[10px] right-[10px] absolute" onClick={() => setOpenImage(false)}>&times;</span>
+            <img src={nft.image} className="z-30 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4/5 h-4/5 object-contain" />
+          </>
         )}
       <div className="bg-zinc-100 opacity-[7%] w-full h-[1px] mb-10" />
       <div className="flex items-center" ref={heightRef}>
@@ -170,7 +171,9 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
                 <small className="text-zinc-100 opacity-40">Creator</small>
                 <div className="flex mt-1 items-center">
                   <Jazzicon diameter={30} seed={parseInt(nft.creator?.slice(2, 10), 16)} />
-                  <p className="text-sm ml-3 font-bold">{shortenAddress(nft.creator)}</p>
+                  <Link href={`/nfts?id=${nft.creator}`} passHref>
+                    <a className="text-sm ml-3 font-bold hover:underline">{shortenAddress(nft.creator)}</a>
+                  </Link>
                 </div>
               </div>
               {nft.seller !== '0x0000000000000000000000000000000000000000'
@@ -179,7 +182,9 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
                     <small className="text-zinc-100 opacity-40">Seller</small>
                     <div className="flex mt-1 items-center">
                       <Jazzicon diameter={30} seed={parseInt(nft.seller?.slice(2, 10), 16)} />
-                      <p className="text-sm ml-3 font-bold">{shortenAddress(nft.seller)}</p>
+                      <Link href={`/nfts?id=${nft.seller}`} passHref>
+                        <a className="text-sm ml-3 font-bold hover:underline">{shortenAddress(nft.seller)}</a>
+                      </Link>
                     </div>
                   </div>
                 )}
