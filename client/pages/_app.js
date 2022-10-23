@@ -118,14 +118,14 @@ const MyApp = ({ Component, pageProps }) => {
 
       getCurrentNetwork();
       isConnected()
-        .then(() => connectWallet())
+        .then((addr) => addr && connectWallet())
         .catch((err) => console.log(err.message));
     } else {
       setInstallMetamask(true);
     }
   }, []);
 
-  const props = { ...pageProps, currency, ipfs, gateway, signer, provider, getContract, account, setShowSellModal, showSellModal, openImage, setOpenImage, getInterface };
+  const props = { ...pageProps, currency, ipfs, gateway, signer, provider, getContract, account, setShowSellModal, showSellModal, openImage, setOpenImage, getInterface, setAccount };
 
   return (
     <>
@@ -134,7 +134,7 @@ const MyApp = ({ Component, pageProps }) => {
         <title>NFT Baazar</title>
       </Head>
       <ToastContainer position="bottom-right" theme="dark" />
-      {(showModal || showSellModal || openImage) && <div className="absolute w-screen h-screen backdrop-blur-md backdrop-brightness-50 z-30" />}
+      {(showModal || showSellModal || openImage) && <div className="absolute w-full h-screen backdrop-blur-md backdrop-brightness-50 z-30" />}
       <div className="min-h-screen gradient-background flex flex-col">
         <Nav
           connectWallet={connectWallet}

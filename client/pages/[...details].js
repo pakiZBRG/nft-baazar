@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { shortenAddress } from '../utils';
 import { Loader, SellModal } from '../components';
 
-const NftDetails = ({ account, getContract, provider, currency, showSellModal, setShowSellModal, signer, openImage, setOpenImage, getInterface }) => {
+const NftDetails = ({ account, getContract, provider, currency, showSellModal, setShowSellModal, signer, openImage, setOpenImage, getInterface, setAccount }) => {
   const [nft, setNft] = useState({});
   const [price, setPrice] = useState(0);
   const [reject, setReject] = useState(false);
@@ -98,6 +98,8 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
       const tx = await contract.putTokenOnSale(nft.tokenId, formatPrice, { value: listingPrice.toString() });
       await tx.wait();
       toast.success(`NFT is put on sale for ${nft.price} ${currency}`);
+      const balance = await signer.getBalance();
+      setAccount({ ...account, balance });
       setReject(false);
       setShowSellModal(false);
     } catch (error) {
@@ -129,6 +131,9 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
       const tx = await contract.purchaseToken(nft.tokenId, { value: formatPrice });
       await tx.wait();
       toast.success(`${nft.name} is bought for ${nft.price} ${currency}!`);
+      const balance = await signer.getBalance();
+      setAccount({ ...account, balance });
+      getNftDetails();
       setReject(false);
     } catch (error) {
       console.log(error.message);
@@ -218,7 +223,7 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
                             </Link>
                           </div>
                           <div className="flex items-center">
-                            <p>{expe}</p>
+                            <p className="text-zinc-200">{expe}</p>
                             <p className="text-xs ml-1 text-zinc-100 opacity-50">{currency}</p>
                           </div>
                         </div>

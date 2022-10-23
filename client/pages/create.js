@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { MdUploadFile } from 'react-icons/md';
 import Loader from '../components/Loader';
 
-const CreateNFT = ({ currency, ipfs, gateway, signer, getContract }) => {
+const CreateNFT = ({ currency, ipfs, gateway, signer, getContract, setAccount, account }) => {
   const [fileUrl, setFileUrl] = useState(null);
   const [data, setData] = useState({});
   const [reject, setReject] = useState(false);
@@ -68,6 +68,8 @@ const CreateNFT = ({ currency, ipfs, gateway, signer, getContract }) => {
       toast.info('Minting NFT. Please wait...');
       await tx.wait();
 
+      const balance = await signer.getBalance();
+      setAccount({ ...account, balance });
       router.push('/nfts');
       toast.success('NFT minted!');
     } catch (erorr) {

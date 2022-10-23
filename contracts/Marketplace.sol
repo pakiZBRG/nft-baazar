@@ -10,6 +10,9 @@ error Marketplace__NonZeroPrice();
 error Marketplace__InsertListingPrice();
 error Marketplace__OnlyOwner();
 error Marketplace__InsertAskingPrice();
+error Marketplace__SentToOwnerFailed();
+error Marketplace__SentToSellerFailed();
+error Marketplace__CantBuyYourNFT();
 
 contract Marketplace is ERC721URIStorage {
     using Counters for Counters.Counter;
@@ -114,17 +117,24 @@ contract Marketplace is ERC721URIStorage {
     function purchaseToken(uint256 tokenId) public payable {
         if (msg.value != marketItem[tokenId].price)
             revert Marketplace__InsertAskingPrice();
+        if (msg.sender == marketItem[tokenId].seller)
+            revert Marketplace__CantBuyYourNFT();
 
         marketItem[tokenId].owner = payable(msg.sender);
         marketItem[tokenId].isSelling = false;
         marketItem[tokenId].price = msg.value;
-        marketItem[tokenId].seller = payable(address(0)); // empty => belongs to marketplace
+        marketItem[tokenId].old_price = msg.value;
 
         _itemsForSell.decrement();
         _transfer(address(this), msg.sender, tokenId);
 
-        payable(owner).transfer(listingPrice);
-        payable(marketItem[tokenId].seller).transfer(msg.value);
+        (bool sentToOwner, ) = payable(owner).call{value: listingPrice}("");
+        if (!sentToOwner) revert Marketplace__SentToOwnerFailed();
+        (bool sentToSeller, ) = payable(marketItem[tokenId].seller).call{
+            value: msg.value
+        }("");
+        if (!sentToSeller) revert Marketplace__SentToSellerFailed();
+        marketItem[tokenId].seller = payable(address(0));
 
         emit MarketItemBought(tokenId, msg.value, block.timestamp, msg.sender);
     }
