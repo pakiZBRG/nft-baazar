@@ -14,6 +14,7 @@ const Nav = ({ account, installMetamask, connectWallet, switchNetwork, chainId, 
   const [showDialog, setShowDialog] = useState(false);
   const [activeNetwork, setActiveNetwork] = useState({});
   const [copied, setCopied] = useState(false);
+  const [openNavbar, setOpenNavbar] = useState(false);
   const modalRef = useRef();
   const { address, balance } = account;
 
@@ -75,7 +76,7 @@ const Nav = ({ account, installMetamask, connectWallet, switchNetwork, chainId, 
           <img src="/static/eth-colored.png" className="h-8" />
         </Link>
       </div>
-      <div className="flex">
+      <div className="tablet:flex hidden">
         <ul className="flex items-center">
           <li className="mx-4 text-md font-semibold text-slate-100">
             <Link href="/">Explore</Link>
@@ -144,7 +145,7 @@ const Nav = ({ account, installMetamask, connectWallet, switchNetwork, chainId, 
                   </div>
                   <div className="text-sm text-white px-[2px] py-[2px] black-glassmorphism rounded-xl flex items-center">
                     <p className="font-bold text-base mx-3 address-font">{formatBigNumber(balance, 3)}</p>
-                    <div className="flex white-glassmorphism px-3 py-1 rounded-[11px] pt-[6px] pb-[2px] cursor-pointer border border-transparent hover:border-slate-600 duration-300" onClick={() => setShowModal(true)}>
+                    <div className="flex items-center py-1 white-glassmorphism px-3 rounded-[11px] cursor-pointer border border-transparent hover:border-slate-600 duration-300" onClick={() => setShowModal(true)}>
                       <p className="mr-2 font-bold text-base address-font">{shortenAddress(address)}</p>
                       <Jazzicon diameter={20} seed={parseInt(account.address.slice(2, 10), 16)} />
                     </div>
@@ -218,6 +219,16 @@ const Nav = ({ account, installMetamask, connectWallet, switchNetwork, chainId, 
             </div>
           )}
       </div>
+
+      <div className="tablet:hidden block">
+        <div className="cursor-pointer z-20" onClick={() => setOpenNavbar((prevState) => !prevState)}>
+          <div className="h-[3px] w-10 bg-white opacity-40" />
+          <div className="h-[3px] w-10 bg-white opacity-40 mt-2" />
+          <div className="h-[3px] w-10 bg-white opacity-40 mt-2" />
+        </div>
+      </div>
+
+      {openNavbar && <p>asd</p>}
 
       {showModal
         && (
