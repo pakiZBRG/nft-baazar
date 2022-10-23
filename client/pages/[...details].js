@@ -85,8 +85,8 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
   }, [getNftDetails]);
 
   const putNftOnSale = async () => {
-    if (+price < nft.price) {
-      toast.info(`Please, input the price greater or equal than ${nft.price}`);
+    if (+price <= 0) {
+      toast.info('Please, input the price greater than zero');
       return 0;
     }
 
@@ -141,7 +141,8 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
     }
   };
 
-  const isCreator = nft.creator?.toLowerCase() === account.address.toLowerCase() || nft.seller === '0x0000000000000000000000000000000000000000' || nft.seller?.toLowerCase() === account.address.toLowerCase();
+  const isOwner = nft.owner?.toLowerCase() === account.address.toLowerCase();
+  const isSeller = nft.seller?.toLowerCase() === account.address.toLowerCase();
 
   return (
     <>
@@ -234,7 +235,7 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
                 )}
             </div>
             <div className="mt-8">
-              {!isCreator
+              {!isSeller && nft.isSelling
                 && (
                   <button
                     type="button"
@@ -244,27 +245,24 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
                     {!reject ? 'Buy' : <Loader size={5} message="Processing..." />}
                   </button>
                 )}
-              {
-                isCreator && !nft.isSelling
-                  ? (
-                    <button
-                      type="button"
-                      className="white-glassmorphism px-5 py-[6px] text-slate-100 rounded-lg hover:shadow-zinc-900/40 shadow-lg border border-transparent hover:border-slate-500 duration-300"
-                      onClick={() => setShowSellModal(true)}
-                    >
-                      Put on Sale
-                    </button>
-                  )
-                  : (
-                    <button
-                      type="button"
-                      className="white-glassmorphism px-5 py-[6px] text-slate-100 rounded-lg hover:shadow-zinc-900/40 shadow-lg border border-transparent hover:border-slate-500 duration-300"
-                      onClick={() => setShowSellModal(true)}
-                    >
-                      Remove from Market
-                    </button>
-                  )
-              }
+              {isOwner && !nft.isSelling && (
+                <button
+                  type="button"
+                  className="white-glassmorphism px-5 py-[6px] text-slate-100 rounded-lg hover:shadow-zinc-900/40 shadow-lg border border-transparent hover:border-slate-500 duration-300"
+                  onClick={() => setShowSellModal(true)}
+                >
+                  Put on Sale
+                </button>
+              )}
+              {isSeller && nft.isSelling && (
+                <button
+                  type="button"
+                  className="white-glassmorphism px-5 py-[6px] text-slate-100 rounded-lg hover:shadow-zinc-900/40 shadow-lg border border-transparent hover:border-slate-500 duration-300"
+                  onClick={() => setShowSellModal(true)}
+                >
+                  Remove from Market
+                </button>
+              )}
             </div>
           </div>
         </div>
