@@ -80,7 +80,7 @@ const CreateNFT = ({ currency, ipfs, gateway, signer, getContract, setAccount, a
 
   return (
     <div className="flex w-4/5 mx-auto justify-center sm:px-4">
-      <div className="w-3/5 md:w-full">
+      <div className="w-4/5">
         <h1 className="text-slate-100 font-bold text-2xl">Create new NFT</h1>
         <div className="mt-12">
           <div className="mt-2">

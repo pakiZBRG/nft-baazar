@@ -49,8 +49,8 @@ const MyNft = ({ getContract, signer, currency, account }) => {
   return (
     <div>
       <div className="bg-zinc-100 opacity-[7%] w-full h-[1px] mb-6" />
-      <div className="flex items-center justify-between my-9">
-        <h1 className="text-2xl text-slate-100 font-bold">My Nfts</h1>
+      <div className="flex  flex-col tablet:flex-row justify-between my-9">
+        <h1 className="text-2xl text-slate-100 font-bold mb-2 tablet:mb-0">My Nfts</h1>
         <Filter nfts={myNfts} setNfts={setMyNfts} copyNfts={myCopyNfts} />
       </div>
       <div className="flex flex-wrap">

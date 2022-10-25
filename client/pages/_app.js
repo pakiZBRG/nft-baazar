@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Head from 'next/head';
 import { ethers } from 'ethers';
 import { ToastContainer, toast } from 'react-toastify';
@@ -43,6 +43,8 @@ const MyApp = ({ Component, pageProps }) => {
   const [deployedNetworks, setDeployedNetworks] = useState([]);
   const [currency, setCurrency] = useState('');
   const [openImage, setOpenImage] = useState(false);
+  const [openNavbar, setOpenNavbar] = useState(false);
+  const heightRef = useRef();
 
   const getContract = async (signerOrProvider) => {
     try {
@@ -65,7 +67,6 @@ const MyApp = ({ Component, pageProps }) => {
       const accounts = await provider.send('eth_requestAccounts', []);
       const balance = await signer.getBalance();
       setAccount({ address: accounts[0], balance });
-      localStorage.setItem('nft_marketplace', true);
       setIsLoggedIn(true);
     } catch (error) {
       if (error.code === 4001) {
@@ -109,6 +110,7 @@ const MyApp = ({ Component, pageProps }) => {
       });
       window.ethereum.on('chainChanged', (networkId) => {
         connectWallet();
+        getCurrentNetwork();
         if (contractAddress[+networkId]) {
           setSwitchNetwork(false);
         } else {
@@ -127,6 +129,10 @@ const MyApp = ({ Component, pageProps }) => {
 
   const props = { ...pageProps, currency, ipfs, gateway, signer, provider, getContract, account, setShowSellModal, showSellModal, openImage, setOpenImage, getInterface, setAccount };
 
+  useEffect(() => {
+    document.body.style.overflow = openNavbar ? 'hidden' : 'visible';
+  }, [openNavbar]);
+
   return (
     <>
       <Head>
@@ -135,7 +141,8 @@ const MyApp = ({ Component, pageProps }) => {
       </Head>
       <ToastContainer position="bottom-right" theme="dark" />
       {(showModal || showSellModal || openImage) && <div className="absolute w-full h-screen backdrop-blur-md backdrop-brightness-50 z-30" />}
-      <div className="min-h-screen gradient-background flex flex-col">
+      <div className={`absolute tablet:hidden ease-in ${openNavbar ? 'h-screen' : 'h-0'} duration-500 w-full backdrop-blur-md backdrop-brightness-50 z-30`} />
+      <div ref={heightRef} className="min-h-screen gradient-background flex flex-col">
         <Nav
           connectWallet={connectWallet}
           account={account}
@@ -145,9 +152,11 @@ const MyApp = ({ Component, pageProps }) => {
           setChainId={setChainId}
           setShowModal={setShowModal}
           showModal={showModal}
-          setIsLoggedIn={setIsLoggedIn}
           isLoggedIn={isLoggedIn}
           deployedNetworks={deployedNetworks}
+          setOpenNavbar={setOpenNavbar}
+          openNavbar={openNavbar}
+          currency={currency}
         />
         <div className="my-8 w-11/12 mx-auto">
           <Component {...props} />

@@ -9,12 +9,12 @@ import { HiOutlineExternalLink } from 'react-icons/hi';
 import Jazzicon from 'react-jazzicon';
 
 import { formatBigNumber, networks, shortenAddress } from '../utils';
+import MobileNav from './MobileNav';
 
-const Nav = ({ account, installMetamask, connectWallet, switchNetwork, chainId, setChainId, setShowModal, showModal, isLoggedIn, setIsLoggedIn, deployedNetworks }) => {
+const Nav = ({ account, installMetamask, connectWallet, switchNetwork, chainId, setChainId, setShowModal, showModal, isLoggedIn, currency, deployedNetworks, setOpenNavbar, openNavbar }) => {
   const [showDialog, setShowDialog] = useState(false);
   const [activeNetwork, setActiveNetwork] = useState({});
   const [copied, setCopied] = useState(false);
-  const [openNavbar, setOpenNavbar] = useState(false);
   const modalRef = useRef();
   const { address, balance } = account;
 
@@ -63,15 +63,9 @@ const Nav = ({ account, installMetamask, connectWallet, switchNetwork, chainId, 
     }
   };
 
-  const disconnect = () => {
-    setIsLoggedIn(false);
-    localStorage.removeItem('nft_marketplace');
-    setShowModal(false);
-  };
-
   return (
-    <nav className="flex justify-between m-5">
-      <div className="flex items-center cursor-pointer">
+    <nav className="flex justify-between items-center m-5">
+      <div className="flex cursor-pointer">
         <Link href="/">
           <img src="/static/eth-colored.png" className="h-8" />
         </Link>
@@ -220,35 +214,48 @@ const Nav = ({ account, installMetamask, connectWallet, switchNetwork, chainId, 
           )}
       </div>
 
-      <div className="tablet:hidden block">
-        <div className="cursor-pointer z-20" onClick={() => setOpenNavbar((prevState) => !prevState)}>
-          <div className="h-[3px] w-10 bg-white opacity-40" />
-          <div className="h-[3px] w-10 bg-white opacity-40 mt-2" />
-          <div className="h-[3px] w-10 bg-white opacity-40 mt-2" />
-        </div>
-      </div>
-
-      {openNavbar && <p>asd</p>}
+      {openNavbar
+        ? (
+          <MobileNav
+            setOpenNavbar={setOpenNavbar}
+            isLoggedIn={isLoggedIn}
+            switchNetwork={switchNetwork}
+            showDialog={showDialog}
+            setShowDialog={setShowDialog}
+            activeNetwork={activeNetwork}
+            networks={networks}
+            deployedNetworks={deployedNetworks}
+            chainId={chainId}
+            setShowModal={setShowModal}
+            installMetamask={installMetamask}
+            connectWallet={connectWallet}
+            changeNetwork={changeNetwork}
+            account={account}
+          />
+        )
+        : (
+          <div className="tablet:hidden block">
+            <div className="cursor-pointer z-20" onClick={() => setOpenNavbar((prevState) => !prevState)}>
+              <div className="h-[3px] w-10 bg-white opacity-40" />
+              <div className="h-[3px] w-10 bg-white opacity-40 mt-2" />
+              <div className="h-[3px] w-10 bg-white opacity-40 mt-2" />
+            </div>
+          </div>
+        )}
 
       {showModal
         && (
           <div ref={modalRef} className="fixed inset-1/2 -translate-y-1/2 -translate-x-1/2 w-96 h-44 black-glassmorphism rounded-xl border border-gray-700 z-30 text-white p-4">
             <h3>Account</h3>
             <p className="absolute right-3 top-2 text-3xl cursor-pointer" onClick={() => setShowModal(false)}>&times;</p>
-            <div className="flex justify-between items-center mt-3 mb-2">
+            <div className="mt-3 mb-2">
               <div className="flex items-center">
                 <Jazzicon diameter={30} seed={parseInt(account.address.slice(2, 10), 16)} />
                 <p className="ml-2 font-bold address-font text-2xl">{shortenAddress(address)}</p>
               </div>
-              <button
-                type="button"
-                className="text-[0.825rem] text-rose-700 border border-rose-700 rounded-xl px-2 py-[1px]"
-                onClick={disconnect}
-              >Disconnect
-              </button>
             </div>
             <div className="mb-5 text-lg address-font">
-              {formatBigNumber(balance, 7)} {activeNetwork.nativeCurrency.symbol}
+              {formatBigNumber(balance, 7)} {currency}
             </div>
             <div className="flex text-sm">
               <p
