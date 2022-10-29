@@ -155,7 +155,7 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
       <div className="bg-zinc-100 opacity-[7%] w-full h-[1px] mb-10" />
       <div className="flex items-center tablet:flex-row flex-col">
         <div className="flex-1">
-          <div className="group relative mx-12 my-4">
+          <div className="group relative tablet:mx-12 mx-3 my-4">
             <img src={nft.image} className="rounded-lg shadow-2xl max-h-[550px] mx-auto" />
             <div className="cursor-pointer group-hover:opacity-100 duration-300 opacity-0 absolute top-0 rounded-lg w-full h-full bg-black/50" onClick={() => setOpenImage(true)}>
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">

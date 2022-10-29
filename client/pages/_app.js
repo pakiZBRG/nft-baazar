@@ -140,7 +140,7 @@ const MyApp = ({ Component, pageProps }) => {
         <title>NFT Baazar</title>
       </Head>
       <ToastContainer position="bottom-right" theme="dark" />
-      {(showModal || showSellModal || openImage) && <div className="absolute w-full h-screen backdrop-blur-md backdrop-brightness-50 z-30" />}
+      {(showModal || showSellModal || openImage) && <div className="absolute w-full h-screen backdrop-blur-md backdrop-brightness-[30%] z-30" />}
       <div className={`absolute tablet:hidden ease-in ${openNavbar ? 'h-screen' : 'h-0'} duration-500 w-full backdrop-blur-md backdrop-brightness-50 z-30`} />
       <div ref={heightRef} className="min-h-screen gradient-background flex flex-col">
         <Nav
