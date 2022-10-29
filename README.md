@@ -1,6 +1,6 @@
-Basic Hardhat template for building extensive smart contracts with frontend. You can test your contracts locally and on testnets (Goerli and Mumbai). It supports Goerli and Mumbai test networks. 
+# NFT Marketplace on Which You Can Mint and Sell/Buy NFTs
 
-# Hardhat Setup
+## Hardhat Setup
 - [Setup environment variables](#setup-environment-variables)
 - [Install](#install)
   - [ERESOLVE unable to resolve dependency tree](#eresolve-unable-to-resolve-dependency-tree)
@@ -12,9 +12,7 @@ Basic Hardhat template for building extensive smart contracts with frontend. You
 ## Setup environment variables
 - `PRIVATE_KEY` - private key of one of your Metamask accounts
 - `GOERLI_RPC_URL` - Goerli RPC URL from [Alchemy](https://dashboard.alchemy.com/)
-- `GOERLI_WSS` - Goerli WebSocket URL from [Alchemy](https://dashboard.alchemy.com/)
 - `MUMBAI_RPC_URL` - Mumbai RPC URL from [Alchemy](https://dashboard.alchemy.com/)
-- `MUMBAI_WSS` - Mumbai WebSocket URL from [Alchemy](https://dashboard.alchemy.com/)
 - `ETHERSCAN_API_KEY` - API key from [Etherscan](https://etherscan.io/) for contract verification
 - `POLYGONSCAN_API_KEY` - API key from [Polygonscan](https://polygonscan.com/) for contract verification
 

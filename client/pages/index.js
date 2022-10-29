@@ -75,10 +75,10 @@ const Home = ({ provider, signer, getContract, currency }) => {
         {!loading
           ? creators?.length
             ? creators.slice(0, 10).sort((a, b) => b.sum - a.sum).map((creator) => <CreatorCard key={creator.seller} creator={creator} currency={currency} />)
-            : <h1 className="mx-auto text-slate-300 text-lg font-bold italic">No Creators</h1>
+            : <h1 className="mx-auto text-slate-300 text-lg font-bold italic my-4">No Creators</h1>
           : <div className="mx-auto my-4"><Loader size={8} /></div>}
       </div>
-      <h1 className="text-3xl text-slate-100 font-bold text-center mt-8 mb-14">NFTs on sale!</h1>
+      <h1 className="text-3xl text-slate-100 font-bold mt-8 mb-14">NFTs on sale!</h1>
       <Filter nfts={nfts} setNfts={setNfts} copyNfts={copyNfts} />
       <div className="flex flex-wrap justify-center tablet:justify-start">
         {!loading

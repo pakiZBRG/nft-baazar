@@ -11,36 +11,37 @@ import Link from 'next/link';
 import { shortenAddress } from '../utils';
 import { Loader, SellModal } from '../components';
 
-const NftDetails = ({ account, getContract, provider, currency, showSellModal, setShowSellModal, signer, openImage, setOpenImage, getInterface, setAccount }) => {
+const NftDetails = ({ account, getContract, provider, currency, showSellModal, setShowSellModal, signer, openImage, setOpenImage, setAccount }) => {
   const [nft, setNft] = useState({});
   const [price, setPrice] = useState(0);
   const [reject, setReject] = useState(false);
   const [events, setEvents] = useState([]);
   const [tabs, setTabs] = useState('Details');
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const modalRef = useRef();
 
   const getEvents = useCallback(async () => {
     try {
+      setLoading(true);
+      // Works on localhost
       const contract = await getContract(provider);
-      const toBlock = await provider.getBlockNumber();
-      const logData = await provider.getLogs({
-        fromBlock: 0,
-        toBlock,
-        address: contract.address,
-      });
-      const iface = getInterface();
-      const allLogs = logData.map((log) => iface.parseLog(log));
-      const nftLogs = allLogs.filter((log) => log.name === 'MarketItemBought' && log.args.tokenId.toNumber() === nft.tokenId);
+      const filter = contract.filters.MarketItemBought();
+      const queryEvents = await contract.queryFilter(filter);
+      const nftLogs = queryEvents.filter((log) => log.args.tokenId.toNumber() === nft.tokenId);
       const formatLogs = nftLogs.map((log) => ({
         buyer: log.args.buyer,
-        price: ethers.utils.formatEther(log.args.price),
+        price: parseFloat(ethers.utils.formatUnits(log.args.price, 'ether')).toFixed(3),
       }));
+      setLoading(false);
       setEvents(formatLogs);
+      // setEvents('How to fetch events from public blockchain?');
     } catch (error) {
+      setLoading(false);
+      setEvents('No events found');
       console.log(error.message);
     }
-  }, [provider, getContract, getInterface, nft.tokenId]);
+  }, [provider, getContract, nft.tokenId]);
 
   useEffect(() => {
     getEvents();
@@ -95,8 +96,9 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
       const listingPrice = await contract.getListingPrice();
       const formatPrice = ethers.utils.parseUnits(price, 'ether');
       const tx = await contract.putTokenOnSale(nft.tokenId, formatPrice, { value: listingPrice.toString() });
+      toast.info('Putting NFT onto the market...');
       await tx.wait();
-      toast.success(`NFT is put on sale for ${price} ${currency}`);
+      toast.success(`NFT is put on sale for ${parseFloat(price).toFixed(5)} ${currency}`);
       const balance = await signer.getBalance();
       setAccount({ ...account, balance });
       setReject(false);
@@ -112,6 +114,7 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
       setReject(true);
       const contract = await getContract(signer);
       const tx = await contract.removeTokenFromMarket(nft.tokenId);
+      toast.info('Removing NFT from the market...');
       await tx.wait();
       toast.success('NFT is removed from sale!');
       setReject(false);
@@ -128,8 +131,9 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
       const contract = await getContract(signer);
       const formatPrice = ethers.utils.parseEther(price);
       const tx = await contract.purchaseToken(nft.tokenId, { value: formatPrice });
+      toast.info('Buying the NFT...');
       await tx.wait();
-      toast.success(`${nft.name} is bought for ${nft.price} ${currency}!`);
+      toast.success(`${nft.name} is bought for ${parseFloat(nft.price).toFixed(5)} ${currency}!`);
       const balance = await signer.getBalance();
       setAccount({ ...account, balance });
       getNftDetails();
@@ -196,7 +200,7 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
             <div className="mt-6 flex flex-col items-end">
               <small className="text-zinc-100 opacity-40">Price</small>
               <h1 className="font-bold">
-                <span className="text-xl">{nft.price} </span>
+                <span className="text-xl">{parseFloat(nft.price).toFixed(4)} </span>
                 <span className="text-md">{currency}</span>
               </h1>
             </div>
@@ -211,24 +215,33 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
                 ? <div className="p-1 h-40 overflow-y-auto whitespace-pre-line">{nft.description}</div>
                 : (
                   <div className="p-1 h-40 overflow-y-auto">
-                    {events?.map(({ buyer, price: expe }, i) => (
-                      <div key={i}>
-                        <div className="flex justify-between items-center p-1 m-1">
-                          <div className="flex items-center">
-                            <Jazzicon diameter={15} seed={parseInt(buyer.slice(2, 10), 16)} />
-                            <Link href={`/nfts?id=${buyer}`} passHref>
-                              <p className="cursor-pointer hover:underline text-sm text-zinc-100 opacity-50 ml-2">{shortenAddress(buyer.toLowerCase())}
-                              </p>
-                            </Link>
+                    {!loading
+                      ? typeof events !== 'string'
+                        ? events?.map(({ buyer, price: expe }, i) => (
+                          <div key={i}>
+                            <div className="flex justify-between items-center p-1 m-1">
+                              <div className="flex items-center">
+                                <Jazzicon diameter={15} seed={parseInt(buyer.slice(2, 10), 16)} />
+                                <Link href={`/nfts?id=${buyer}`} passHref>
+                                  <p className="cursor-pointer hover:underline text-sm text-zinc-100 opacity-50 ml-2">{shortenAddress(buyer.toLowerCase())}
+                                  </p>
+                                </Link>
+                              </div>
+                              <div className="flex items-center">
+                                <p className="text-zinc-200">{expe}</p>
+                                <p className="text-xs ml-1 text-zinc-100 opacity-50">{currency}</p>
+                              </div>
+                            </div>
+                            <div className="w-full h-[1px] bg-zinc-100 opacity-10" />
                           </div>
-                          <div className="flex items-center">
-                            <p className="text-zinc-200">{expe}</p>
-                            <p className="text-xs ml-1 text-zinc-100 opacity-50">{currency}</p>
-                          </div>
+                        ))
+                        : <p className="my-4 opacity-80 text-center italic">{events}</p>
+                      : (
+                        <div className="my-4 text-center">
+                          <Loader size={5} />
+                          <p className="animate-pulse mt-2 opacity-80">Fetching events...</p>
                         </div>
-                        <div className="w-full h-[1px] bg-zinc-100 opacity-10" />
-                      </div>
-                    ))}
+                      )}
                   </div>
                 )}
             </div>

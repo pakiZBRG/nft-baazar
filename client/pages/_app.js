@@ -1,11 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { ethers } from 'ethers';
 import { ToastContainer, toast } from 'react-toastify';
 import { create } from 'ipfs-http-client';
+import { useRouter } from 'next/router';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { Nav } from '../components';
+import { Nav, Footer } from '../components';
 import { abi, contractAddress } from '../contract';
 import '../styles/main.css';
 import { networks } from '../utils';
@@ -33,6 +34,7 @@ const ipfs = create({
 });
 
 const MyApp = ({ Component, pageProps }) => {
+  const router = useRouter();
   const [account, setAccount] = useState({ address: '', balance: '' });
   const [installMetamask, setInstallMetamask] = useState(false);
   const [switchNetwork, setSwitchNetwork] = useState(false);
@@ -44,7 +46,6 @@ const MyApp = ({ Component, pageProps }) => {
   const [currency, setCurrency] = useState('');
   const [openImage, setOpenImage] = useState(false);
   const [openNavbar, setOpenNavbar] = useState(false);
-  const heightRef = useRef();
 
   const getContract = async (signerOrProvider) => {
     try {
@@ -55,11 +56,6 @@ const MyApp = ({ Component, pageProps }) => {
     } catch (error) {
       console.log(error.message);
     }
-  };
-
-  const getInterface = () => {
-    const iface = new ethers.utils.Interface(abi);
-    return iface;
   };
 
   const connectWallet = async () => {
@@ -109,6 +105,7 @@ const MyApp = ({ Component, pageProps }) => {
         }
       });
       window.ethereum.on('chainChanged', (networkId) => {
+        router.push('/');
         connectWallet();
         getCurrentNetwork();
         if (contractAddress[+networkId]) {
@@ -127,11 +124,11 @@ const MyApp = ({ Component, pageProps }) => {
     }
   }, []);
 
-  const props = { ...pageProps, currency, ipfs, gateway, signer, provider, getContract, account, setShowSellModal, showSellModal, openImage, setOpenImage, getInterface, setAccount };
+  const props = { ...pageProps, currency, ipfs, gateway, signer, provider, getContract, account, setShowSellModal, showSellModal, openImage, setOpenImage, setAccount };
 
   useEffect(() => {
-    document.body.style.overflow = openNavbar ? 'hidden' : 'visible';
-  }, [openNavbar]);
+    document.body.style.overflow = openNavbar || showModal ? 'hidden' : 'visible';
+  }, [openNavbar, showModal]);
 
   return (
     <>
@@ -140,27 +137,30 @@ const MyApp = ({ Component, pageProps }) => {
         <title>NFT Baazar</title>
       </Head>
       <ToastContainer position="bottom-right" theme="dark" />
-      {(showModal || showSellModal || openImage) && <div className="absolute w-full h-screen backdrop-blur-md backdrop-brightness-[30%] z-30" />}
+      {(showModal || showSellModal || openImage) && <div className="absolute w-full backdrop-blur-md backdrop-brightness-[30%] z-30 h-screen" />}
       <div className={`absolute tablet:hidden ease-in ${openNavbar ? 'h-screen' : 'h-0'} duration-500 w-full backdrop-blur-md backdrop-brightness-50 z-30`} />
-      <div ref={heightRef} className="min-h-screen gradient-background flex flex-col">
-        <Nav
-          connectWallet={connectWallet}
-          account={account}
-          installMetamask={installMetamask}
-          switchNetwork={switchNetwork}
-          chainId={chainId}
-          setChainId={setChainId}
-          setShowModal={setShowModal}
-          showModal={showModal}
-          isLoggedIn={isLoggedIn}
-          deployedNetworks={deployedNetworks}
-          setOpenNavbar={setOpenNavbar}
-          openNavbar={openNavbar}
-          currency={currency}
-        />
-        <div className="w-11/12 mx-auto">
-          <Component {...props} />
+      <div className="gradient-background">
+        <div className="min-h-screen flex flex-col">
+          <Nav
+            connectWallet={connectWallet}
+            account={account}
+            installMetamask={installMetamask}
+            switchNetwork={switchNetwork}
+            chainId={chainId}
+            setChainId={setChainId}
+            setShowModal={setShowModal}
+            showModal={showModal}
+            isLoggedIn={isLoggedIn}
+            deployedNetworks={deployedNetworks}
+            setOpenNavbar={setOpenNavbar}
+            openNavbar={openNavbar}
+            currency={currency}
+          />
+          <div className="w-11/12 mx-auto">
+            <Component {...props} />
+          </div>
         </div>
+        <Footer getContract={getContract} provider={provider} />
       </div>
     </>
   );

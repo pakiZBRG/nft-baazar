@@ -31,7 +31,7 @@ const Card = ({ myNFT, nft, currency }) => (
               <div className="flex mt-1 flex-row">
                 <div className="flex-1 py-1">
                   <small className="text-slate-400">Price</small>
-                  <p className="font-semibold text-sm">{nft.price} <span className="normal">{currency}</span></p>
+                  <p className="font-semibold text-sm">{parseFloat(nft.price).toFixed(4)} <span className="text-xs">{currency}</span></p>
                 </div>
                 <div className="flex-1 py-1">
                   <small className="text-slate-400">Creator</small>
@@ -45,7 +45,7 @@ const Card = ({ myNFT, nft, currency }) => (
               <div className="font-semibold">{nft.name.length > 17 ? `${nft.name.slice(0, 17)}...` : nft.name}</div>
               <div>
                 <small className="text-slate-400">Price</small>
-                <p className="font-semibold text-sm">{nft.price} <span className="normal">{currency}</span></p>
+                <p className="font-semibold text-sm">{parseFloat(nft.price).toFixed(4)} <span className="text-xs">{currency}</span></p>
               </div>
             </div>
           )}

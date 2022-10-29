@@ -81,12 +81,13 @@ const CreateNFT = ({ currency, ipfs, gateway, signer, getContract, setAccount, a
   return (
     <>
       <div className="bg-zinc-100 opacity-[7%] w-full h-[1px] mb-6" />
-      <div className="flex w-4/5 mx-auto justify-center sm:px-4">
-        <div className="w-4/5">
-          <h1 className="text-slate-100 font-bold text-center mt-4 mb-14 text-3xl">Create new NFT</h1>
+      <div className="flex w-4/5 mx-auto justify-center my-8 sm:px-4">
+        <div className="tablet:w-4/5 w-full">
+          <h1 className="text-slate-100 font-bold text-center mb-14 text-3xl">Create new NFT</h1>
           <div className="mt-12">
+            <p className="text-white opacity-90 text-sm">Image</p>
             <div className="mt-2">
-              <div {...getRootProps()} className="cursor-pointer border-dashed border-2 flex flex-col items-center p-10 rounded-3xl">
+              <div {...getRootProps()} className="cursor-pointer white-glassmorphism  flex flex-col items-center p-10 rounded-3xl">
                 <input {...getInputProps()} />
                 <div className="text-center">
                   <div className="my-5 w-full flex justify-center">
@@ -104,7 +105,7 @@ const CreateNFT = ({ currency, ipfs, gateway, signer, getContract, setAccount, a
                         <MdUploadFile className="text-white h-28 w-28" />
                       )}
                   </div>
-                  <p className="text-slate-200 text-base"> <strong className="underline">Click to upload</strong> or drag and drop an image</p>
+                  <p className="text-slate-200 text-base"><strong className="underline">Click to upload</strong> or drag and drop an image</p>
                   <p className="text-slate-200 mt-2 text-sm">JPG, PNG, GIF, SVG <strong>Max 2MB</strong></p>
                 </div>
               </div>
@@ -112,7 +113,7 @@ const CreateNFT = ({ currency, ipfs, gateway, signer, getContract, setAccount, a
           </div>
 
           <div className="mt-7 w-full">
-            <p className="text-slate-100 text-sm">Name</p>
+            <p className="text-white opacity-90 text-sm">Name</p>
             <input
               onChange={handleChange('name')}
               type="text"
@@ -121,7 +122,7 @@ const CreateNFT = ({ currency, ipfs, gateway, signer, getContract, setAccount, a
             />
           </div>
           <div className="mt-7 w-full">
-            <p className="text-slate-100 text-sm">Price</p>
+            <p className="text-white opacity-90 text-sm">Price</p>
             <div className="flex white-glassmorphism px-3 py-2 mt-2 rounded-lg">
               <input
                 onChange={handleChange('price')}
@@ -134,7 +135,7 @@ const CreateNFT = ({ currency, ipfs, gateway, signer, getContract, setAccount, a
             <small className="text-slate-300 text-xs">Creator fee: 0.01 {currency}</small>
           </div>
           <div className="mt-7">
-            <p className="text-slate-100 text-sm">Description</p>
+            <p className="text-white opacity-90 text-sm">Description</p>
             <textarea
               onChange={handleChange('description')}
               rows={4}

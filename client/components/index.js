@@ -4,6 +4,7 @@ import Card from './Card';
 import SellModal from './SellModal';
 import CreatorCard from './CreatorCard';
 import Filter from './Filter';
+import Footer from './Footer';
 
 export {
   Nav,
@@ -12,4 +13,5 @@ export {
   SellModal,
   CreatorCard,
   Filter,
+  Footer,
 };

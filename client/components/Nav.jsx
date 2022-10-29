@@ -121,7 +121,7 @@ const Nav = ({ account, installMetamask, connectWallet, switchNetwork, chainId, 
                             {networks.filter((net) => deployedNetworks.includes(parseInt(net.chainId, 16).toString())).map((chain) => (
                               <div
                                 onClick={() => changeNetwork(chain.chainName)}
-                                className={`flex justify-between items-center p-1 mb-1 cursor-${chain.chainId !== chainId ? 'pointer hover:bg-zinc-700 duration-150 rounded-md' : 'default'}`}
+                                className={`flex justify-between items-center p-1 mb-1 cursor-${chain.chainId !== chainId ? 'pointer hover:bg-zinc-800 duration-150 rounded-md' : 'default'}`}
                                 key={chain.chainId}
                               >
                                 <div className="flex">
@@ -284,7 +284,7 @@ const Nav = ({ account, installMetamask, connectWallet, switchNetwork, chainId, 
                     className="flex items-center hover:underline"
                     rel="noreferrer"
                   >
-                    <HiOutlineExternalLink className="mr-1" />View on Exloprer
+                    <HiOutlineExternalLink className="mr-1" />View on Explorer
                   </a>
                 )}
             </div>
