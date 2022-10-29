@@ -121,7 +121,7 @@ const Nav = ({ account, installMetamask, connectWallet, switchNetwork, chainId, 
                             {networks.filter((net) => deployedNetworks.includes(parseInt(net.chainId, 16).toString())).map((chain) => (
                               <div
                                 onClick={() => changeNetwork(chain.chainName)}
-                                className={`flex justify-between items-center p-1 mb-1 cursor-${chain.chainId !== chainId ? 'pointer' : 'default'}`}
+                                className={`flex justify-between items-center p-1 mb-1 cursor-${chain.chainId !== chainId ? 'pointer hover:bg-zinc-700 duration-150 rounded-md' : 'default'}`}
                                 key={chain.chainId}
                               >
                                 <div className="flex">

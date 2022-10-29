@@ -29,9 +29,13 @@ const MyNft = ({ getContract, signer, currency, account }) => {
           owner: item.owner,
           creator: item.creator,
           isSelling: item.isSelling,
+          createdAt: item.createdAt.toNumber(),
           tokenURI,
         };
       }));
+
+      // display first the newest
+      items.sort((a, b) => b.createdAt - a.createdAt);
 
       setMyNfts(items);
       setMyCopyNfts(items);
@@ -49,14 +53,12 @@ const MyNft = ({ getContract, signer, currency, account }) => {
   return (
     <div>
       <div className="bg-zinc-100 opacity-[7%] w-full h-[1px] mb-6" />
-      <div className="flex  flex-col tablet:flex-row justify-between my-9">
-        <h1 className="text-2xl text-slate-100 font-bold mb-2 tablet:mb-0">My Nfts</h1>
-        <Filter nfts={myNfts} setNfts={setMyNfts} copyNfts={myCopyNfts} />
-      </div>
-      <div className="flex flex-wrap">
+      <h1 className="text-3xl mt-8 mb-14 text-slate-100 text-center font-bold">My Nfts</h1>
+      <Filter nfts={myNfts} setNfts={setMyNfts} copyNfts={myCopyNfts} />
+      <div className="flex flex-wrap justify-center tablet:justify-start">
         {!loading
-          ? myCopyNfts?.length
-            ? myCopyNfts?.map((nft) => <Card myNFT key={nft.tokenId} currency={currency} nft={nft} />)
+          ? myNfts?.length
+            ? myNfts?.map((nft) => <Card myNFT key={nft.tokenId} currency={currency} nft={nft} />)
             : <h1 className="my-10 mx-auto text-slate-300 text-lg font-bold italic">No NFTs</h1>
           : <div className="mx-auto"><Loader size={8} /></div>}
       </div>

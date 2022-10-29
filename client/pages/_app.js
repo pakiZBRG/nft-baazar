@@ -158,7 +158,7 @@ const MyApp = ({ Component, pageProps }) => {
           openNavbar={openNavbar}
           currency={currency}
         />
-        <div className="my-8 w-11/12 mx-auto">
+        <div className="w-11/12 mx-auto">
           <Component {...props} />
         </div>
       </div>

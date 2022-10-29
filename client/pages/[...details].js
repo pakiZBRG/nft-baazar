@@ -96,7 +96,7 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
       const formatPrice = ethers.utils.parseUnits(price, 'ether');
       const tx = await contract.putTokenOnSale(nft.tokenId, formatPrice, { value: listingPrice.toString() });
       await tx.wait();
-      toast.success(`NFT is put on sale for ${nft.price} ${currency}`);
+      toast.success(`NFT is put on sale for ${price} ${currency}`);
       const balance = await signer.getBalance();
       setAccount({ ...account, balance });
       setReject(false);
@@ -208,7 +208,7 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
               </div>
               <div className="bg-zinc-100 opacity-10 w-full h-[1px] my-2" />
               {tabs === 'Details'
-                ? <div className="p-1 h-40 overflow-y-auto">{nft.description}</div>
+                ? <div className="p-1 h-40 overflow-y-auto whitespace-pre-line">{nft.description}</div>
                 : (
                   <div className="p-1 h-40 overflow-y-auto">
                     {events?.map(({ buyer, price: expe }, i) => (

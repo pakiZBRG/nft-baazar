@@ -79,77 +79,80 @@ const CreateNFT = ({ currency, ipfs, gateway, signer, getContract, setAccount, a
   };
 
   return (
-    <div className="flex w-4/5 mx-auto justify-center sm:px-4">
-      <div className="w-4/5">
-        <h1 className="text-slate-100 font-bold text-2xl">Create new NFT</h1>
-        <div className="mt-12">
-          <div className="mt-2">
-            <div {...getRootProps()} className="cursor-pointer border-dashed border-2 flex flex-col items-center p-10 rounded-3xl">
-              <input {...getInputProps()} />
-              <div className="text-center">
-                <div className="my-5 w-full flex justify-center">
-                  {fileUrl
-                    ? (
-                      <img
-                        src={fileUrl}
-                        alt="asset_file"
-                        width={250}
-                        height={250}
-                        className="object-contain rounded-xl shadow-xl"
-                      />
-                    )
-                    : (
-                      <MdUploadFile className="text-white h-28 w-28" />
-                    )}
+    <>
+      <div className="bg-zinc-100 opacity-[7%] w-full h-[1px] mb-6" />
+      <div className="flex w-4/5 mx-auto justify-center sm:px-4">
+        <div className="w-4/5">
+          <h1 className="text-slate-100 font-bold text-center mt-4 mb-14 text-3xl">Create new NFT</h1>
+          <div className="mt-12">
+            <div className="mt-2">
+              <div {...getRootProps()} className="cursor-pointer border-dashed border-2 flex flex-col items-center p-10 rounded-3xl">
+                <input {...getInputProps()} />
+                <div className="text-center">
+                  <div className="my-5 w-full flex justify-center">
+                    {fileUrl
+                      ? (
+                        <img
+                          src={fileUrl}
+                          alt="asset_file"
+                          width={250}
+                          height={250}
+                          className="object-contain rounded-xl shadow-xl"
+                        />
+                      )
+                      : (
+                        <MdUploadFile className="text-white h-28 w-28" />
+                      )}
+                  </div>
+                  <p className="text-slate-200 text-base"> <strong className="underline">Click to upload</strong> or drag and drop an image</p>
+                  <p className="text-slate-200 mt-2 text-sm">JPG, PNG, GIF, SVG <strong>Max 2MB</strong></p>
                 </div>
-                <p className="text-slate-200 text-base"> <strong className="underline">Click to upload</strong> or drag and drop</p>
-                <p className="text-slate-200 mt-2 text-sm">JPG, PNG, GIF, SVG <strong>Max 2MB</strong></p>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="mt-7 w-full">
-          <p className="text-slate-100 text-sm">Name</p>
-          <input
-            onChange={handleChange('name')}
-            type="text"
-            className="white-glassmorphism rounded-lg w-full outline-none text-white text-base mt-2 px-3 py-2"
-            placeholder="My Awesome NFT"
-          />
-        </div>
-        <div className="mt-7 w-full">
-          <p className="text-slate-100 text-sm">Price</p>
-          <div className="flex white-glassmorphism px-3 py-2 mt-2 rounded-lg">
+          <div className="mt-7 w-full">
+            <p className="text-slate-100 text-sm">Name</p>
             <input
-              onChange={handleChange('price')}
-              type="number"
-              className="flex-1 bg-transparent outline-none text-white"
-              placeholder="10"
+              onChange={handleChange('name')}
+              type="text"
+              className="white-glassmorphism rounded-lg w-full outline-none text-white text-base mt-2 px-3 py-2"
+              placeholder="My Awesome NFT"
             />
-            <p className="text-slate-100">{currency}</p>
           </div>
-          <small className="text-slate-300 text-xs">Creator fee: 0.01 {currency}</small>
-        </div>
-        <div className="mt-7">
-          <p className="text-slate-100 text-sm">Description</p>
-          <textarea
-            onChange={handleChange('description')}
-            rows={4}
-            className="white-glassmorphism px-3 py-2 mt-2 rounded-lg resize-none w-full text-white outline-none"
-          />
-        </div>
-        <div className="mt-7">
-          <button
-            onClick={createNFT}
-            type="submit"
-            className={`${reject ? 'cursor-not-allowed opacity-70' : 'hover:border-slate-600'} text-white black-glassmorphism px-3 py-[7px] rounded-lg float-right border border-transparent duration-300`}
-          >
-            {!reject ? 'Create' : <Loader size={5} message="Processing..." />}
-          </button>
+          <div className="mt-7 w-full">
+            <p className="text-slate-100 text-sm">Price</p>
+            <div className="flex white-glassmorphism px-3 py-2 mt-2 rounded-lg">
+              <input
+                onChange={handleChange('price')}
+                type="number"
+                className="flex-1 bg-transparent outline-none text-white"
+                placeholder="10"
+              />
+              <p className="text-slate-100">{currency}</p>
+            </div>
+            <small className="text-slate-300 text-xs">Creator fee: 0.01 {currency}</small>
+          </div>
+          <div className="mt-7">
+            <p className="text-slate-100 text-sm">Description</p>
+            <textarea
+              onChange={handleChange('description')}
+              rows={4}
+              className="white-glassmorphism px-3 py-2 mt-2 rounded-lg resize-none w-full text-white outline-none"
+            />
+          </div>
+          <div className="mt-7">
+            <button
+              onClick={createNFT}
+              type="submit"
+              className={`${reject ? 'cursor-not-allowed opacity-70' : 'hover:border-slate-600'} text-white black-glassmorphism px-3 py-[7px] rounded-lg float-right border border-transparent duration-300`}
+            >
+              {!reject ? 'Create' : <Loader size={5} message="Processing..." />}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
