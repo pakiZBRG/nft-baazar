@@ -4,6 +4,7 @@ import { ethers } from 'ethers';
 import { useRouter } from 'next/router';
 
 import { Card, Filter, Loader } from '../components';
+import { formatNumber } from '../utils';
 
 const MyNft = ({ getContract, signer, currency, account }) => {
   const router = useRouter();
@@ -19,7 +20,7 @@ const MyNft = ({ getContract, signer, currency, account }) => {
       const items = await Promise.all(myItems.map(async (item) => {
         const tokenURI = await contract.tokenURI(item.tokenId);
         const { data } = await axios.get(tokenURI);
-        const price = ethers.utils.formatUnits(item.price.toString(), 'ether');
+        const price = formatNumber(ethers.utils.formatUnits(item.price, 'ether'));
 
         return {
           ...data,

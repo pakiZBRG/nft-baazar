@@ -3,6 +3,7 @@ import { ethers } from 'ethers';
 import axios from 'axios';
 
 import { Card, Loader, CreatorCard, Filter } from '../components';
+import { formatNumber } from '../utils';
 
 const Home = ({ provider, signer, getContract, currency }) => {
   const [nfts, setNfts] = useState([]);
@@ -17,7 +18,7 @@ const Home = ({ provider, signer, getContract, currency }) => {
       const items = await Promise.all(marketItems.map(async (item) => {
         const tokenURI = await contract.tokenURI(item.tokenId);
         const { data } = await axios.get(tokenURI);
-        const price = ethers.utils.formatUnits(item.price.toString(), 'ether');
+        const price = formatNumber(ethers.utils.formatUnits(item.price, 'ether'));
 
         return {
           ...data,

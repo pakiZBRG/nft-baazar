@@ -127,8 +127,8 @@ const MyApp = ({ Component, pageProps }) => {
   const props = { ...pageProps, currency, ipfs, gateway, signer, provider, getContract, account, setShowSellModal, showSellModal, openImage, setOpenImage, setAccount };
 
   useEffect(() => {
-    document.body.style.overflow = openNavbar || showModal ? 'hidden' : 'visible';
-  }, [openNavbar, showModal]);
+    document.body.style.overflow = openNavbar || showModal || showSellModal || openImage ? 'hidden' : 'visible';
+  }, [openNavbar, showModal, showSellModal, openImage]);
 
   return (
     <>
@@ -137,8 +137,8 @@ const MyApp = ({ Component, pageProps }) => {
         <title>NFT Baazar</title>
       </Head>
       <ToastContainer position="bottom-right" theme="dark" />
-      {(showModal || showSellModal || openImage) && <div className="absolute w-full backdrop-blur-md backdrop-brightness-[30%] z-30 h-screen" />}
-      <div className={`absolute tablet:hidden ease-in ${openNavbar ? 'h-screen' : 'h-0'} duration-500 w-full backdrop-blur-md backdrop-brightness-50 z-30`} />
+      {(showModal || showSellModal || openImage) && <div className="fixed w-full backdrop-blur-md backdrop-brightness-[30%] z-30 min-h-screen" />}
+      <div className={`fixed tablet:hidden ease-in ${openNavbar ? 'h-screen' : 'h-0'} duration-500 w-full backdrop-blur-md backdrop-brightness-50 z-30`} />
       <div className="gradient-background">
         <div className="min-h-screen flex flex-col">
           <Nav
@@ -160,7 +160,11 @@ const MyApp = ({ Component, pageProps }) => {
             <Component {...props} />
           </div>
         </div>
-        <Footer getContract={getContract} provider={provider} />
+        <Footer
+          getContract={getContract}
+          provider={provider}
+          deployedNetworks={deployedNetworks}
+        />
       </div>
     </>
   );

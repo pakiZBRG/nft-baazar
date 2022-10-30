@@ -8,7 +8,7 @@ import Jazzicon from 'react-jazzicon';
 import { toast } from 'react-toastify';
 
 import Link from 'next/link';
-import { shortenAddress } from '../utils';
+import { formatNumber, shortenAddress } from '../utils';
 import { Loader, SellModal } from '../components';
 
 const NftDetails = ({ account, getContract, provider, currency, showSellModal, setShowSellModal, signer, openImage, setOpenImage, setAccount }) => {
@@ -24,14 +24,13 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
   const getEvents = useCallback(async () => {
     try {
       setLoading(true);
-      // Works on localhost
       const contract = await getContract(provider);
       const filter = contract.filters.MarketItemBought();
       const queryEvents = await contract.queryFilter(filter);
       const nftLogs = queryEvents.filter((log) => log.args.tokenId.toNumber() === nft.tokenId);
       const formatLogs = nftLogs.map((log) => ({
         buyer: log.args.buyer,
-        price: parseFloat(ethers.utils.formatUnits(log.args.price, 'ether')).toFixed(3),
+        price: formatNumber(ethers.utils.formatUnits(log.args.price, 'ether')),
       }));
       setLoading(false);
       setEvents(formatLogs);
@@ -65,7 +64,7 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
           ...data,
           tokenId: token.tokenId.toNumber(),
           owner: token.owner,
-          price: ethers.utils.formatUnits(token.price, 'ether'),
+          price: formatNumber(ethers.utils.formatUnits(token.price, 'ether')),
           seller: token.seller,
           isSelling: token.isSelling,
           createdAt: token.createdAt.toNumber(),
@@ -98,7 +97,7 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
       const tx = await contract.putTokenOnSale(nft.tokenId, formatPrice, { value: listingPrice.toString() });
       toast.info('Putting NFT onto the market...');
       await tx.wait();
-      toast.success(`NFT is put on sale for ${parseFloat(price).toFixed(5)} ${currency}`);
+      toast.success(`NFT is put on sale for ${formatNumber(price)} ${currency}`);
       const balance = await signer.getBalance();
       setAccount({ ...account, balance });
       setReject(false);
@@ -126,6 +125,11 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
   };
 
   const buyNFT = async () => {
+    if (+price > +ethers.utils.formatEther(account.balance)) {
+      toast.info('Dont have enough funds!');
+      return 0;
+    }
+
     try {
       setReject(true);
       const contract = await getContract(signer);
@@ -133,7 +137,7 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
       const tx = await contract.purchaseToken(nft.tokenId, { value: formatPrice });
       toast.info('Buying the NFT...');
       await tx.wait();
-      toast.success(`${nft.name} is bought for ${parseFloat(nft.price).toFixed(5)} ${currency}!`);
+      toast.success(`${nft.name} is bought for ${formatNumber(nft.price)} ${currency}!`);
       const balance = await signer.getBalance();
       setAccount({ ...account, balance });
       getNftDetails();
@@ -152,8 +156,8 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
       {openImage
         && (
           <>
-            <span className="z-30 text-white text-7xl cursor-pointer top-[10px] right-[10px] absolute" onClick={() => setOpenImage(false)}>&times;</span>
-            <img src={nft.image} className="z-30 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4/5 h-4/5 object-contain" />
+            <span className="z-30 text-white text-7xl cursor-pointer top-[10px] right-[10px] fixed" onClick={() => setOpenImage(false)}>&times;</span>
+            <img src={nft.image} className="z-30 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4/5 h-4/5 object-contain" />
           </>
         )}
       <div className="bg-zinc-100 opacity-[7%] w-full h-[1px] mb-10" />
@@ -200,7 +204,7 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
             <div className="mt-6 flex flex-col items-end">
               <small className="text-zinc-100 opacity-40">Price</small>
               <h1 className="font-bold">
-                <span className="text-xl">{parseFloat(nft.price).toFixed(4)} </span>
+                <span className="text-xl">{nft.price} </span>
                 <span className="text-md">{currency}</span>
               </h1>
             </div>
@@ -228,11 +232,11 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
                                 </Link>
                               </div>
                               <div className="flex items-center">
-                                <p className="text-zinc-200">{expe}</p>
+                                <p className="text-zinc-200">{formatNumber(expe)}</p>
                                 <p className="text-xs ml-1 text-zinc-100 opacity-50">{currency}</p>
                               </div>
                             </div>
-                            <div className="w-full h-[1px] bg-zinc-100 opacity-10" />
+                            {i !== events.length - 1 ? <div className="w-full h-[1px] bg-zinc-100 opacity-10" /> : null}
                           </div>
                         ))
                         : <p className="my-4 opacity-80 text-center italic">{events}</p>

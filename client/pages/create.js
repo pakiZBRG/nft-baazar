@@ -16,7 +16,7 @@ const CreateNFT = ({ currency, ipfs, gateway, signer, getContract, setAccount, a
 
   const uploadToIPFS = useCallback(async (file) => {
     try {
-      const added = await ipfs.add({ content: file });
+      const added = await ipfs.add({ content: file }, { progress: (prog) => prog === file.size && toast.success('Image uploaded') });
       const url = `${gateway}/ipfs/${added.path}`;
       return url;
     } catch (error) {
@@ -130,9 +130,9 @@ const CreateNFT = ({ currency, ipfs, gateway, signer, getContract, setAccount, a
                 className="flex-1 bg-transparent outline-none text-white"
                 placeholder="10"
               />
-              <p className="text-slate-100">{currency}</p>
+              <p className="text-slate-100 select-none">{currency}</p>
             </div>
-            <small className="text-slate-300 text-xs">Creator fee: 0.01 {currency}</small>
+            <small className="text-slate-300 text-xs">Creator fee:<b className="ml-1">0.01 {currency}</b></small>
           </div>
           <div className="mt-7">
             <p className="text-white opacity-90 text-sm">Description</p>

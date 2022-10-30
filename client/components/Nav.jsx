@@ -100,7 +100,7 @@ const Nav = ({ account, installMetamask, connectWallet, switchNetwork, chainId, 
                       onMouseEnter={() => setShowDialog(true)}
                       onMouseLeave={() => setShowDialog(false)}
                     >
-                      {activeNetwork.iconUrls
+                      {activeNetwork?.iconUrls
                         && <img src={activeNetwork.iconUrls[1]} alt="logo" width="20" height="20" className="mr-2" />}
                       {activeNetwork.chainName}
                     </div>
@@ -161,12 +161,12 @@ const Nav = ({ account, installMetamask, connectWallet, switchNetwork, chainId, 
                     && (
                       <>
                         <div
-                          className="absolute w-52 right-[15px] h-1 opacity-0"
+                          className="absolute w-56 right-[40px] h-1 opacity-10"
                           onMouseEnter={() => setShowDialog(true)}
                           onMouseLeave={() => setShowDialog(false)}
                         />
                         <div
-                          className="absolute right-[20px] top-[62px] w-[250px] px-4 py-3 rounded-xl black-glassmorphism"
+                          className="absolute right-[20px] top-[62px] w-[250px] px-4 py-3 rounded-xl black-glassmorphism z-20"
                           onMouseEnter={() => setShowDialog(true)}
                           onMouseLeave={() => setShowDialog(false)}
                         >
@@ -226,6 +226,7 @@ const Nav = ({ account, installMetamask, connectWallet, switchNetwork, chainId, 
             networks={networks}
             deployedNetworks={deployedNetworks}
             chainId={chainId}
+            showModal={showModal}
             setShowModal={setShowModal}
             installMetamask={installMetamask}
             connectWallet={connectWallet}

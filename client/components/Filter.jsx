@@ -62,7 +62,7 @@ const Filter = ({ nfts, setNfts, copyNfts }) => {
   }, [search, searchNfts]);
 
   return (
-    <div className="flex justify-end mb-8">
+    <div className="flex justify-end mb-8 select-none">
       <label className="relative block mr-4 text-white">
         <FiSearch className="absolute left-[12px] top-[11px] z-10" />
         <input className="bg-transparent opacity-80 border border-transparent focus:border-slate-600 duration-300 rounded-lg black-glassmorphism w-72 text-sm outline-none py-[7.5px] pl-10" placeholder="Search NFTs" onChange={(e) => setSearch(e.target.value)} />

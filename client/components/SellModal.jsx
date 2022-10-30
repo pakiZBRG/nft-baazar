@@ -17,7 +17,7 @@ const SellModal = ({ modalRef, nft, price, currency, setPrice, putNftOnSale, rej
             />
             <p className="text-slate-100">{currency}</p>
           </div>
-          <small className="text-slate-300 flex self-start text-xs mb-7 mt-1">Creator fee: 0.01 {currency}</small>
+          <small className="text-slate-300 flex self-start text-xs mb-7 mt-1">Creator fee:<b className="ml-1">0.01 {currency}</b></small>
         </>
       )}
     {nft.isSelling

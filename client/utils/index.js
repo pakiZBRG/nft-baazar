@@ -10,6 +10,18 @@ const formatBigNumber = (price, decimal) => {
   return integer;
 };
 
+// format decaimal number
+const formatNumber = (number) => {
+  const numberAsString = number.toString();
+  if (numberAsString.includes('.')) {
+    if (numberAsString.split('.')[1].length === 1) {
+      return parseFloat(number).toFixed(1);
+    }
+    return parseFloat(number).toFixed(3);
+  }
+  return 0;
+};
+
 // https://chainid.network/chains.json
 const networks = [
   {
@@ -72,4 +84,5 @@ export {
   shortenAddress,
   formatBigNumber,
   networks,
+  formatNumber,
 };

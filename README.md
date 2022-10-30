@@ -8,6 +8,7 @@
 - [Template for building Hardhat projects in Solidity](#template-for-building-hardhat-projects-in-solidity)
 - [Frontend](#frontend)
 - [Eslint Config](#eslint-config)
+- [Miscellaneous](#miscellaneous)
 
 ## Setup environment variables
 - `PRIVATE_KEY` - private key of one of your Metamask accounts
@@ -92,3 +93,7 @@ Reconfigure eslint
 ```
 npx eslint --init
 ```
+
+## Miscellaneous
+### Nonce too high. Expected nonce to be 0 but got 2
+[Solution](https://medium.com/@thelasthash/solved-nonce-too-high-error-with-metamask-and-hardhat-adc66f092cd)
