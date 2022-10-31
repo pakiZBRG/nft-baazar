@@ -85,8 +85,8 @@ const CreateNFT = ({ currency, ipfs, gateway, signer, getContract, setAccount, a
         <div className="tablet:w-4/5 w-full">
           <h1 className="text-slate-100 font-bold text-center mb-14 text-3xl">Create new NFT</h1>
           <div className="mt-12">
-            <p className="text-white opacity-90 text-sm">Image</p>
-            <div className="mt-2">
+            <p className="text-white opacity-60 text-sm">Image</p>
+            <div className="mt-1">
               <div {...getRootProps()} className="cursor-pointer white-glassmorphism  flex flex-col items-center p-10 rounded-3xl">
                 <input {...getInputProps()} />
                 <div className="text-center">
@@ -113,17 +113,17 @@ const CreateNFT = ({ currency, ipfs, gateway, signer, getContract, setAccount, a
           </div>
 
           <div className="mt-7 w-full">
-            <p className="text-white opacity-90 text-sm">Name</p>
+            <p className="text-white opacity-60 text-sm">Name</p>
             <input
               onChange={handleChange('name')}
               type="text"
-              className="white-glassmorphism rounded-lg w-full outline-none text-white text-base mt-2 px-3 py-2"
+              className="white-glassmorphism rounded-lg w-full outline-none text-white text-base mt-1 px-3 py-2"
               placeholder="My Awesome NFT"
             />
           </div>
           <div className="mt-7 w-full">
-            <p className="text-white opacity-90 text-sm">Price</p>
-            <div className="flex white-glassmorphism px-3 py-2 mt-2 rounded-lg">
+            <p className="text-white opacity-60 text-sm">Price</p>
+            <div className="flex white-glassmorphism px-3 py-2 mt-1 rounded-lg">
               <input
                 onChange={handleChange('price')}
                 type="number"
@@ -135,11 +135,11 @@ const CreateNFT = ({ currency, ipfs, gateway, signer, getContract, setAccount, a
             <small className="text-slate-300 text-xs">Creator fee:<b className="ml-1">0.01 {currency}</b></small>
           </div>
           <div className="mt-7">
-            <p className="text-white opacity-90 text-sm">Description</p>
+            <p className="text-white opacity-60 text-sm">Description</p>
             <textarea
               onChange={handleChange('description')}
               rows={4}
-              className="white-glassmorphism px-3 py-2 mt-2 rounded-lg resize-none w-full text-white outline-none"
+              className="white-glassmorphism px-3 py-2 mt-1 rounded-lg resize-none w-full text-white outline-none"
             />
           </div>
           <div className="mt-7">

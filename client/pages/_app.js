@@ -124,7 +124,7 @@ const MyApp = ({ Component, pageProps }) => {
     }
   }, []);
 
-  const props = { ...pageProps, currency, ipfs, gateway, signer, provider, getContract, account, setShowSellModal, showSellModal, openImage, setOpenImage, setAccount };
+  const props = { ...pageProps, currency, ipfs, gateway, signer, provider, getContract, account, setShowSellModal, showSellModal, openImage, setOpenImage, setAccount, chainId };
 
   useEffect(() => {
     document.body.style.overflow = openNavbar || showModal || showSellModal || openImage ? 'hidden' : 'visible';

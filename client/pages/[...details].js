@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { formatNumber, shortenAddress } from '../utils';
 import { Loader, SellModal } from '../components';
 
-const NftDetails = ({ account, getContract, provider, currency, showSellModal, setShowSellModal, signer, openImage, setOpenImage, setAccount }) => {
+const NftDetails = ({ account, getContract, provider, currency, showSellModal, setShowSellModal, signer, openImage, setOpenImage, setAccount, chainId }) => {
   const [nft, setNft] = useState({});
   const [price, setPrice] = useState(0);
   const [reject, setReject] = useState(false);
@@ -24,7 +24,16 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
   const getEvents = useCallback(async () => {
     try {
       setLoading(true);
-      const contract = await getContract(provider);
+      let providerWSS;
+      switch (+chainId) {
+        case 80001:
+          providerWSS = new ethers.providers.WebSocketProvider(process.env.NEXT_PUBLIC_MUMBAI_WSS);
+          break;
+        default:
+          providerWSS = provider;
+          break;
+      }
+      const contract = await getContract(providerWSS);
       const filter = contract.filters.MarketItemBought();
       const queryEvents = await contract.queryFilter(filter);
       const nftLogs = queryEvents.filter((log) => log.args.tokenId.toNumber() === nft.tokenId);
@@ -32,15 +41,15 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
         buyer: log.args.buyer,
         price: formatNumber(ethers.utils.formatUnits(log.args.price, 'ether')),
       }));
+
       setLoading(false);
       setEvents(formatLogs);
-      // setEvents('How to fetch events from public blockchain?');
     } catch (error) {
       setLoading(false);
       setEvents('No events found');
       console.log(error.message);
     }
-  }, [provider, getContract, nft.tokenId]);
+  }, [getContract, chainId, provider, nft.tokenId]);
 
   useEffect(() => {
     getEvents();

@@ -10,7 +10,7 @@ const formatBigNumber = (price, decimal) => {
   return integer;
 };
 
-// format decaimal number
+// format decimal number
 const formatNumber = (number) => {
   const numberAsString = number.toString();
   if (numberAsString.includes('.')) {

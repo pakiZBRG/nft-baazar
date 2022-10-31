@@ -11,7 +11,7 @@ const Filter = ({ nfts, setNfts, copyNfts }) => {
   const [search, setSearch] = useState('');
   const filterRef = useRef();
 
-  const filterData = ['Most recent', 'Price: low to high', 'Price: high to low', router.pathname === '/nfts' && 'On Sale'];
+  const filterData = ['Most recent', 'Price: low to high', 'Price: high to low', router.pathname === '/nfts' && 'On sale'];
 
   useEffect(() => {
     const closeModal = (e) => !filterRef?.current?.contains(e.target) && setOpenFilter(false);
@@ -33,7 +33,7 @@ const Filter = ({ nfts, setNfts, copyNfts }) => {
       case 'Price: high to low':
         setNfts(copiedNfts.sort((a, b) => b.price - a.price));
         break;
-      case 'On Sale':
+      case 'On sale':
         setNfts(sortedNfts.filter((nft) => nft.isSelling));
         break;
       default:
