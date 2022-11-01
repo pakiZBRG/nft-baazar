@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { useEffect, useState, useCallback } from 'react';
 import { ethers } from 'ethers';
 import axios from 'axios';

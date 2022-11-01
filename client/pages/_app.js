@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { ethers } from 'ethers';
