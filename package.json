@@ -7,7 +7,7 @@
     "client": "cd client && npm run dev",
     "blockchain": "hh node",
     "dev": "concurrently \"npm run client\" \"npm run blockchain\" \"hh deploy\"",
-    "build": "cd client && npm run build && npm run export",
+    "build": "cd client && npm run build",
     "deploy:goerli": "hh deploy --network goerli",
     "deploy:mumbai": "hh deploy --network mumbai",
     "postinstall": "cd client && npm i && cd ../",
