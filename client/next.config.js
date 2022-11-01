@@ -3,6 +3,7 @@ const nextConfig = {
   swcMinify: true,
   images: {
     domains: ['nft-baazar.infura-ipfs.io'],
+    unoptimized: true,
   },
 };
 
