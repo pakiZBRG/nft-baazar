@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { Card, Filter, Loader } from '../components';
 import { formatNumber } from '../utils';
 
-const MyNft = ({ getContract, signer, currency, account }) => {
+const MyNft = ({ getContract, provider, currency, account }) => {
   const router = useRouter();
   const userId = router.query.id;
   const [myNfts, setMyNfts] = useState([]);
@@ -15,7 +15,7 @@ const MyNft = ({ getContract, signer, currency, account }) => {
 
   const getNfts = useCallback(async () => {
     try {
-      const contract = await getContract(signer);
+      const contract = await getContract(provider);
       const myItems = await contract.getPersonsNFTs(userId || account.address);
       const items = await Promise.all(myItems.map(async (item) => {
         const tokenURI = await contract.tokenURI(item.tokenId);
@@ -45,7 +45,7 @@ const MyNft = ({ getContract, signer, currency, account }) => {
       console.log(error.message);
       setLoading(false);
     }
-  }, [getContract, account.address, signer, userId]);
+  }, [getContract, account.address, provider, userId]);
 
   useEffect(() => {
     getNfts();
