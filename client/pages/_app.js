@@ -135,7 +135,7 @@ const MyApp = ({ Component, pageProps }) => {
     <>
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <title>NFT Baazar</title>
+        <title>NFT Baazar | Create, Buy and Sell NFTs</title>
       </Head>
       <ToastContainer position="bottom-right" theme="dark" />
       {(showModal || showSellModal || openImage) && <div className="fixed w-full backdrop-blur-md backdrop-brightness-[30%] z-30 min-h-screen" />}
