@@ -8,8 +8,8 @@ import Jazzicon from 'react-jazzicon';
 import { toast } from 'react-toastify';
 
 import Link from 'next/link';
-import { formatNumber, shortenAddress } from '../utils';
-import { Loader, SellModal } from '../components';
+import { formatNumber, shortenAddress } from '../../utils';
+import { Loader, SellModal } from '../../components';
 
 const NftDetails = ({ account, getContract, provider, currency, showSellModal, setShowSellModal, signer, openImage, setOpenImage, setAccount, chainId }) => {
   const [nft, setNft] = useState({});
@@ -63,8 +63,8 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
 
   const getNftDetails = useCallback(async () => {
     try {
-      if (router.query.details) {
-        const id = router.query.details[2];
+      if (router.query.id) {
+        const id = router.query.id[1];
         const contract = await getContract(provider);
         const token = await contract.getMarketItem(id);
         const tokenURI = await contract.tokenURI(id);
@@ -86,7 +86,7 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
     } catch (error) {
       console.log(error.message);
     }
-  }, [getContract, provider, router.query.details]);
+  }, [getContract, provider, router.query.id]);
 
   useEffect(() => {
     getNftDetails();

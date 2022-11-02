@@ -37,7 +37,7 @@ const networks = [
     ],
     iconUrls: [
       'https://cdn.freebiesupply.com/logos/large/2x/ethereum-1-logo-png-transparent.png',
-      '/public/eth-logo.png',
+      '/static/eth-logo.png',
     ],
   },
   {
@@ -56,7 +56,7 @@ const networks = [
     blockExplorerUrls: ['https://goerli.etherscan.io'],
     iconUrls: [
       'https://cdn.freebiesupply.com/logos/large/2x/ethereum-1-logo-png-transparent.png',
-      '/public/eth-logo.png',
+      '/static/eth-logo.png',
     ],
   },
   {
@@ -75,7 +75,7 @@ const networks = [
     blockExplorerUrls: ['https://mumbai.polygonscan.com'],
     iconUrls: [
       'https://img.api.cryptorank.io/coins/polygon1624610763534.png',
-      '/public/polygon-logo.png',
+      '/static/polygon-logo.png',
     ],
   },
 ];

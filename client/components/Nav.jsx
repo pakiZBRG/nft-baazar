@@ -67,7 +67,7 @@ const Nav = ({ account, installMetamask, connectWallet, switchNetwork, chainId, 
     <nav className="flex justify-between items-center m-5">
       <div className="flex cursor-pointer">
         <Link href="/">
-          <img src="/public/eth-colored.png" className="h-8" />
+          <img src="/static/eth-colored.png" className="h-8" />
         </Link>
       </div>
       <div className="tablet:flex hidden">

@@ -3,7 +3,7 @@ import { Html, Head, Main, NextScript } from 'next/document';
 const Document = () => (
   <Html>
     <Head>
-      <link rel="shortcut icon" href="/public/favicon.png" />
+      <link rel="shortcut icon" href="/static/favicon.png" />
     </Head>
     <body>
       <Main />
