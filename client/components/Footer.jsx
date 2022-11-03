@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { HiOutlineExternalLink } from 'react-icons/hi';
 
-const Footer = ({ getContract, provider, deployedNetworks }) => {
+const Footer = ({ getContract, provider }) => {
   const [contractLink, setContractLink] = useState('');
 
   const setContract = useCallback(async () => {
     const contract = await getContract(provider);
     const network = await provider.getNetwork();
 
-    switch (network.chainId === deployedNetworks) {
+    switch (network.chainId) {
       case 5:
         setContractLink(`https://goerli.etherscan.io/address/${contract.address}`);
         break;
@@ -39,7 +39,7 @@ const Footer = ({ getContract, provider, deployedNetworks }) => {
                 target="_blank"
                 href={contractLink}
                 rel="noreferrer"
-                className="flex items-center hover:underline mb-1"
+                className="flex items-center hover:underline mb-2"
               >
                 <HiOutlineExternalLink className="mr-1" />View Contract
               </a>

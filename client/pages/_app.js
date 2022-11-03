@@ -164,7 +164,6 @@ const MyApp = ({ Component, pageProps }) => {
         <Footer
           getContract={getContract}
           provider={provider}
-          deployedNetworks={deployedNetworks}
         />
       </div>
     </>
