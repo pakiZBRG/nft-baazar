@@ -103,7 +103,7 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
       const contract = await getContract(signer);
       const listingPrice = await contract.getListingPrice();
       const formatPrice = ethers.utils.parseUnits(price, 'ether');
-      const tx = await contract.putTokenOnSale(nft.tokenId, formatPrice, { value: listingPrice.toString() });
+      const tx = await contract.putTokenOnSale(nft.tokenId, formatPrice, { value: listingPrice.toString(), gasLimit: 400000 });
       toast.info('Putting NFT onto the market...');
       await tx.wait();
       toast.success(`NFT is put on sale for ${formatNumber(price)} ${currency}`);
@@ -121,7 +121,7 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
     try {
       setReject(true);
       const contract = await getContract(signer);
-      const tx = await contract.removeTokenFromMarket(nft.tokenId);
+      const tx = await contract.removeTokenFromMarket(nft.tokenId, { gasLimit: 400000 });
       toast.info('Removing NFT from the market...');
       await tx.wait();
       toast.success('NFT is removed from sale!');
@@ -143,7 +143,7 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
       setReject(true);
       const contract = await getContract(signer);
       const formatPrice = ethers.utils.parseEther(price);
-      const tx = await contract.purchaseToken(nft.tokenId, { value: formatPrice });
+      const tx = await contract.purchaseToken(nft.tokenId, { value: formatPrice, gasLimit: 400000 });
       toast.info('Buying the NFT...');
       await tx.wait();
       toast.success(`${nft.name} is bought for ${formatNumber(nft.price)} ${currency}!`);
