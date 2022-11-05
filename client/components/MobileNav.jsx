@@ -147,7 +147,7 @@ const MobileNav = ({ showModal, setOpenNavbar, isLoggedIn, switchNetwork, showDi
                     <a
                       target="_blank"
                       href="https://metamask.io/"
-                      className="absolute bottom-5 right-0 bg-orange-600 hover:shadow-orange-900/40 shadow-xl rounded-xl py-[6px] px-6 mr-6 text-white border border-transparent hover:border-orange-400 duration-300"
+                      className="absolute bottom-5 right-0 bg-orange-600 hover:shadow-orange-900/40 shadow-xl rounded-xl py-[6px] px-6 mr-6 text-whiteduration-300"
                       rel="noreferrer"
                     >
                       Install Metamask

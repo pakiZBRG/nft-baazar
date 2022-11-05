@@ -14,7 +14,7 @@ import { networks } from '../utils';
 
 let provider;
 let signer;
-if (typeof window !== 'undefined') {
+if (typeof window !== 'undefined' && window.ethereum) {
   provider = new ethers.providers.Web3Provider(window.ethereum, 'any');
   signer = provider.getSigner();
 }

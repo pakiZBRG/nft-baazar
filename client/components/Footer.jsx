@@ -5,21 +5,23 @@ const Footer = ({ getContract, provider }) => {
   const [contractLink, setContractLink] = useState('');
 
   const setContract = useCallback(async () => {
-    const contract = await getContract(provider);
-    const network = await provider.getNetwork();
+    if (provider) {
+      const contract = await getContract(provider);
+      const network = await provider.getNetwork();
 
-    switch (network.chainId) {
-      case 5:
-        setContractLink(`https://goerli.etherscan.io/address/${contract.address}`);
-        break;
-      case 80001:
-        setContractLink(`https://mumbai.polygonscan.com/address/${contract.address}`);
-        break;
-      case 31337:
-        setContractLink('');
-        break;
-      default:
-        break;
+      switch (network.chainId) {
+        case 5:
+          setContractLink(`https://goerli.etherscan.io/address/${contract.address}`);
+          break;
+        case 80001:
+          setContractLink(`https://mumbai.polygonscan.com/address/${contract.address}`);
+          break;
+        case 31337:
+          setContractLink('');
+          break;
+        default:
+          break;
+      }
     }
   }, [getContract, provider]);
 

@@ -204,7 +204,7 @@ const Nav = ({ account, installMetamask, connectWallet, switchNetwork, chainId, 
                   <a
                     target="_blank"
                     href="https://metamask.io/"
-                    className="bg-orange-600 hover:shadow-orange-900/40 shadow-xl rounded-xl py-[6px] px-6 mr-6 text-white border border-transparent hover:border-orange-400 duration-300"
+                    className="bg-orange-600 hover:shadow-orange-900/40 shadow-xl rounded-xl py-[6px] px-6 mr-6 text-white duration-300"
                     rel="noreferrer"
                   >
                     Install Metamask
