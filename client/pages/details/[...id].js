@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { formatNumber, shortenAddress } from '../../utils';
 import { Loader, SellModal } from '../../components';
 
-const NftDetails = ({ account, getContract, provider, currency, showSellModal, setShowSellModal, signer, openImage, setOpenImage, setAccount, chainId }) => {
+const NftDetails = ({ account, getContract, provider, currency, showSellModal, setShowSellModal, signer, openImage, setOpenImage, setAccount, chainId, installMetamask }) => {
   const [nft, setNft] = useState({});
   const [price, setPrice] = useState(0);
   const [reject, setReject] = useState(false);
@@ -259,7 +259,7 @@ const NftDetails = ({ account, getContract, provider, currency, showSellModal, s
                 )}
             </div>
             <div className="mt-8">
-              {!isSeller && nft.isSelling
+              {!installMetamask && !isSeller && nft.isSelling
                 && (
                   <button
                     type="button"

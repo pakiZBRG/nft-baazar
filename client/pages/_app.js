@@ -17,6 +17,8 @@ let signer;
 if (typeof window !== 'undefined' && window.ethereum) {
   provider = new ethers.providers.Web3Provider(window.ethereum, 'any');
   signer = provider.getSigner();
+} else {
+  provider = new ethers.providers.JsonRpcProvider(process.env.NEXT_PUBLIC_MUMBAI_RPC);
 }
 
 const projectId = process.env.NEXT_PUBLIC_IPFS_ID;
@@ -126,7 +128,7 @@ const MyApp = ({ Component, pageProps }) => {
     }
   }, []);
 
-  const props = { ...pageProps, currency, ipfs, gateway, signer, provider, getContract, account, setShowSellModal, showSellModal, openImage, setOpenImage, setAccount, chainId };
+  const props = { ...pageProps, currency, ipfs, gateway, signer, provider, getContract, account, setShowSellModal, showSellModal, openImage, setOpenImage, setAccount, chainId, installMetamask };
 
   useEffect(() => {
     document.body.style.overflow = openNavbar || showModal || showSellModal || openImage ? 'hidden' : 'visible';
