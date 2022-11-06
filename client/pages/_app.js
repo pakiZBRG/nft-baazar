@@ -82,8 +82,9 @@ const MyApp = ({ Component, pageProps }) => {
   };
 
   const getCurrentNetwork = async () => {
-    const available = Object.keys(contractAddress).map((key) => key);
-    setDeployedNetworks(available);
+    const allChains = Object.keys(contractAddress).map((key) => key);
+    const viewChains = process.env.NODE_ENV === 'development' ? allChains : allChains.filter((chain) => chain !== '31337');
+    setDeployedNetworks(viewChains);
     try {
       const network = await provider.getNetwork();
       setChainId(`0x${network.chainId.toString(16)}`);
