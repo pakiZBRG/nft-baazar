@@ -1,5 +1,6 @@
 # NFT Marketplace on Which You Can Mint and Sell/Buy NFTs
 
+> Currently deployed on **Goerli**, **Mumbai** and **zkSync**
 ## Hardhat Setup
 - [Setup environment variables](#setup-environment-variables)
 - [Install](#install)
@@ -31,6 +32,9 @@ npm run blockchain
 Run client and blockchain (locally)
 ```
 npm run dev
+Flatten the contract
+```
+npm run flatten
 ```
 Deploy to **Goerli** testnet
 ```
@@ -43,36 +47,6 @@ npm run deploy:mumbai
 Deploy to **zkSync** testnet
 ```
 npm run deploy:zksync
-```
-
-## Template for building Hardhat projects in Solidity
-Run the tests
-```
-hh test
-```
-Run the scripts
-```
-hh run scripts/main.js
-```
-Compile the smart contracts
-```
-hh compile
-```
-Deploy contracts
-```
-hh deploy --network network_name
-```
-Spin up your local blockchain
-```
-hh node
-```
-Deploy contract to **Goerli**
-```
-hh deploy --network goerli
-```
-Deploy contract to **Mumbai**
-```
-hh deploy --network mumbai
 ```
 
 ## Frontend

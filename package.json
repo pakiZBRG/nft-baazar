@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "client": "cd client && npm run dev",
+    "flatten": "hh flatten contracts/Marketplace.sol > contracts/flatten.sol",
     "blockchain": "hh node --no-deploy",
     "dev": "concurrently \"npm run client\" \"npm run blockchain\"",
     "build": "cd client && npm run build",
