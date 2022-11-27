@@ -3,7 +3,6 @@
 ## Hardhat Setup
 - [Setup environment variables](#setup-environment-variables)
 - [Install](#install)
-  - [ERESOLVE unable to resolve dependency tree](#eresolve-unable-to-resolve-dependency-tree)
 - [Scripts](#scripts)
 - [Template for building Hardhat projects in Solidity](#template-for-building-hardhat-projects-in-solidity)
 - [Frontend](#frontend)
