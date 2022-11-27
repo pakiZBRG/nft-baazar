@@ -78,6 +78,23 @@ const networks = [
       '/static/polygon-logo.png',
     ],
   },
+  {
+    chainId: `0x${Number(280).toString(16)}`,
+    chainName: 'zkSync',
+    nativeCurrency: {
+      name: 'Ether',
+      symbol: 'ETH',
+      decimals: 18,
+    },
+    rpcUrls: [
+      'https://zksync2-testnet.zksync.dev',
+    ],
+    blockExplorerUrls: ['https://goerli.explorer.zksync.io/'],
+    iconUrls: [
+      'https://goerli.explorer.zksync.io/favicon.svg',
+      '/static/zksync.svg',
+    ],
+  },
 ];
 
 export {

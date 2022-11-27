@@ -64,7 +64,7 @@ const CreateNFT = ({ currency, ipfs, gateway, signer, getContract, setAccount, a
       const contract = await getContract(signer);
       const listingPrice = await contract.getListingPrice();
 
-      const tx = await contract.createToken(url, formatPrice, { value: listingPrice, gasLimit: 400000 });
+      const tx = await contract.createToken(url, formatPrice, { value: listingPrice });
       toast.info('Minting NFT. Please wait...');
       await tx.wait();
 

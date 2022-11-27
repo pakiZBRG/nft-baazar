@@ -20,25 +20,12 @@
 ## Install
 When utlizing the `npm i` command, both contract and client dependecies will be installed.
 
-### ERESOLVE unable to resolve dependency tree
-If `npm i` throws an error:
-```
-npm ERR! ERESOLVE unable to resolve dependency tree
-npm ERR! 
-npm ERR! While resolving: template@1.0.0
-npm ERR! Found: @nomiclabs/hardhat-ethers@0.3.0-beta.13
-npm ERR! node_modules/@nomiclabs/hardhat-ethers
-npm ERR!   @nomiclabs/hardhat-ethers@"npm:hardhat-deploy-ethers@^0.3.0-beta.13" from the root project
-npm ERR! 
-```
-use `npm i --force` instead.
-
 ## Scripts
 Run client
 ```
 npm run client
 ```
-Run blockchain
+Run blockchain locally
 ```
 npm run blockchain
 ```
@@ -53,6 +40,10 @@ npm run deploy:goerli
 Deploy to **Mumbai** testnet
 ```
 npm run deploy:mumbai
+```
+Deploy to **zkSync** testnet
+```
+npm run deploy:zksync
 ```
 
 ## Template for building Hardhat projects in Solidity

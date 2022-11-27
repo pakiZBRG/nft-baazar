@@ -11,10 +11,13 @@ const Footer = ({ getContract, provider }) => {
 
       switch (network.chainId) {
         case 5:
-          setContractLink(`https://goerli.etherscan.io/address/${contract.address}`);
+          setContractLink(`https://goerli.etherscan.io/address/${contract?.address}`);
           break;
         case 80001:
-          setContractLink(`https://mumbai.polygonscan.com/address/${contract.address}`);
+          setContractLink(`https://mumbai.polygonscan.com/address/${contract?.address}`);
+          break;
+        case 280:
+          setContractLink(`https://goerli.explorer.zksync.io/address/${contract?.address}`);
           break;
         case 31337:
           setContractLink('');

@@ -11,6 +11,7 @@ const { developmentChains } = require('../helper-hardhat-config');
     beforeEach(async () => {
       deployer = (await getNamedAccounts()).deployer;
       await deployments.fixture(['all']);
-      contract = await ethers.getContract('Contract', deployer);
+      const Contract = await ethers.getContractFactory('Marketplace', deployer);
+      contract = await Contract.deploy();
     });
   });

@@ -1,8 +1,8 @@
-const { getNamedAccounts, ethers } = require('hardhat');
+const { ethers } = require('hardhat');
 
 const main = async () => {
-  const { deployer } = await getNamedAccounts();
-  const contract = await ethers.getContract('Marketplace', deployer);
+  const Contract = await ethers.getContractFactory('Marketplace');
+  const contract = await Contract.deploy();
   console.log(contract.address);
 };
 

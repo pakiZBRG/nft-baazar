@@ -7,7 +7,8 @@ const CONTRACT_ADDRESS_PATH = path.join(__dirname, '../client/contract/contractA
 
 const updateContractAddress = async () => {
   const chainId = network.config.chainId.toString();
-  const contract = await ethers.getContract('Marketplace');
+  const Contract = await ethers.getContractFactory('Marketplace');
+  const contract = await Contract.deploy();
   const contractAddress = JSON.parse(fs.readFileSync(CONTRACT_ADDRESS_PATH, 'utf8'));
 
   if (chainId in contractAddress) {
@@ -22,7 +23,8 @@ const updateContractAddress = async () => {
 };
 
 const updateABI = async () => {
-  const contract = await ethers.getContract('Marketplace');
+  const Contract = await ethers.getContractFactory('Marketplace');
+  const contract = await Contract.deploy();
   fs.writeFileSync(ABI_PATH, contract.interface.format(ethers.utils.FormatTypes.json));
 };
 
@@ -33,4 +35,4 @@ module.exports = async () => {
   console.log('ABI and contract address are saved in frontend!');
 };
 
-module.exports.tags = ['all', 'frontend'];
+module.exports.tags = ['testnet', 'frontend'];

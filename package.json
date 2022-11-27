@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "client": "cd client && npm run dev",
-    "blockchain": "hh node",
-    "dev": "concurrently \"npm run client\" \"npm run blockchain\" \"hh deploy\"",
+    "blockchain": "hh node --no-deploy",
+    "dev": "concurrently \"npm run client\" \"npm run blockchain\"",
     "build": "cd client && npm run build",
-    "deploy:goerli": "hh deploy --network goerli",
-    "deploy:mumbai": "hh deploy --network mumbai",
+    "deploy:goerli": "hh deploy --network goerli --tags testnet",
+    "deploy:mumbai": "hh deploy --network mumbai --tags testnet",
+    "deploy:zksync": "hh deploy --tags zksync",
     "postinstall": "cd client && npm i && cd ../",
     "main": "hh run scripts/main.js --network localhost"
   },
@@ -17,8 +18,8 @@
   "author": "pakiZBRG",
   "license": "ISC",
   "dependencies": {
-    "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.13",
-    "@nomiclabs/hardhat-etherscan": "^3.1.0",
+    "@nomiclabs/hardhat-ethers": "^2.2.1",
+    "@nomiclabs/hardhat-etherscan": "^3.1.2",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
     "chai": "^4.3.6",
     "dotenv": "^16.0.1",
@@ -29,6 +30,8 @@
   },
   "devDependencies": {
     "@chainlink/contracts": "^0.4.2",
+    "@matterlabs/hardhat-zksync-deploy": "^0.5.2",
+    "@matterlabs/hardhat-zksync-solc": "^0.3.11-beta.1",
     "@openzeppelin/contracts": "^4.7.3",
     "concurrently": "^7.4.0",
     "eslint": "^8.24.0",
@@ -38,6 +41,7 @@
     "eslint-plugin-react": "^7.31.8",
     "eslint-plugin-react-hooks": "^4.6.0",
     "ethereum-waffle": "^3.4.4",
-    "solhint": "^3.3.7"
+    "solhint": "^3.3.7",
+    "zksync-web3": "^0.12.0"
   }
 }

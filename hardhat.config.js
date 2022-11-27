@@ -1,19 +1,27 @@
-require('dotenv').config();
+require('@matterlabs/hardhat-zksync-deploy');
+require('@matterlabs/hardhat-zksync-solc');
 require('@nomiclabs/hardhat-etherscan');
 require('@nomiclabs/hardhat-waffle');
 require('solidity-coverage');
 require('hardhat-deploy');
+require('dotenv').config();
 
 module.exports = {
+  zksolc: {
+    version: '1.2.0',
+    compilerSource: 'binary',
+  },
+  zkSyncDeploy: {
+    zkSyncNetwork: 'https://zksync2-testnet.zksync.dev',
+    ethNetwork: process.env.GOERLI_RPC_URL,
+  },
   solidity: {
-    compilers: [
-      { version: '0.6.6' },
-      { version: '0.8.7' },
-    ],
+    version: '0.8.16',
   },
   defaultNetwork: 'hardhat',
   networks: {
     hardhat: {
+      zksync: true,
       chainId: 31337,
     },
     localhost: {
